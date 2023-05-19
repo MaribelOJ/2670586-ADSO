@@ -27,6 +27,7 @@ public class Ejercicio14{
         porcentaje3 = datos.nextInt();
 
         promedio = nota1 * (porcentaje1 / 100) + nota2 * (porcentaje2 / 100) + nota3 * (porcentaje3 / 100);
+        promedio = promedio / ( (porcentaje1 + porcentaje2 + porcentaje3) / 100) ;
 
         System.out.println("EL PROMEDIO DE LAS NOTAS ES: ");
         System.out.println(" ");
