@@ -18,6 +18,8 @@ public class Ejercicio13{
         conversion2=seconds/3600;
 
         min = (seconds - (3600 * conversion2)) / 60;
+        
+        sec = (seconds - (3600 * conversion2)) - (min * 60);
 
         sec = (seconds - (3600 * conversion2)) - (min * 60);
 
@@ -26,7 +28,7 @@ public class Ejercicio13{
         System.out.println(" ");
         System.out.println( segundos + " = " + conversion1 + "min");
         System.out.println(" ");
-        System.out.println( " LA CONVERSIÓN A HORAS Y MINUTOS SERIA: ");
+        System.out.println( " LA CONVERSIÓN A HORAS , MINUTOS y SEGUNDOS SERIA: ");
         System.out.println(" ");
         System.out.println( seconds + "secs" +  " = " + conversion2 + " : " + min + " : " + sec);
        
