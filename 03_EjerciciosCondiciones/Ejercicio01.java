@@ -7,10 +7,21 @@ public class Ejercicio01{
         System.out.println("Ingrese su edad: ");
         int anos = edad.nextInt();
 
-        if (anos< 18){
-            System.out.println("Recibe un auxilio de $800.000");
+        if (anos > 100){ 
+            System.out.println("Edad no valida, Ingrese su edad correctamente: ");
+            anos = edad.nextInt();
+            if (anos < 18){
+                System.out.println("Recibe un auxilio de $800.000");
+            }else{
+                System.out.println("Recibe un auxilio de $200.000");
+            }           
         }else{
-            System.out.println("Recibe un auxilio de $200.000");
+            if (anos < 18){
+                System.out.println("Recibe un auxilio de $800.000");
+            }else{
+                System.out.println("Recibe un auxilio de $200.000");
+            }
         }
+        
     }
 }

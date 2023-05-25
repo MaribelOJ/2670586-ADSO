@@ -4,10 +4,10 @@ public class Ejercicio03{
     public static void main(String[] args){
         Scanner numero = new Scanner(System.in);
 
-        System.out.print("Ingrese valor de x: ");
+        System.out.print("Ingrese el valor de x: ");
         int x = numero.nextInt();
 
-        System.out.print("Ingrese valor de y: ");
+        System.out.print("Ingrese el valor de y: ");
         int y = numero.nextInt();
 
         if (x < 0 && y < 0){
@@ -23,7 +23,15 @@ public class Ejercicio03{
                     if (x < 0 && y > 0){
                         System.out.println("La coordenada ingresada se encuentra en el segundo cuadrante");
                     }else{
-                        System.out.println("La coordenada ingresada se encuentra en el origen");
+                        if (x == 0 && y ==0){
+                            System.out.println("La coordenada ingresada se encuentra en el origen");
+                        }else{
+                            if (x == 0 && y > 0 || y < 0){
+                                System.out.println("La coordenada ingresada se encuentra en el eje y");
+                            }else{
+                                System.out.println("La coordenada ingresada se encuentra en el eje x");
+                            }    
+                        }
                     }
                 }
             }

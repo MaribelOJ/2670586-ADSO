@@ -14,27 +14,48 @@ public class Ejercicio04{
         if (num1 > num2){
             if (num1 > num3){
                 System.out.println("El numero mayor es: " + num1);
-            }else{
-                if (num1 == num3){
-                    System.out.println("numero 1 es igual a numero 3 (" + num3 + ") , ambos son mayores a " + num2);
+                if (num3 > num2){
+                    System.out.println("el numero menor es: "+ num2);
                 }else{
-                    System.out.println("El numero mayor es: " + num2);
+                    System.out.println("el numero menor es: "+ num3);
+                }
+            }else{
+                if (num1 < num3){
+                    System.out.println("El numero mayor es: " + num3);
+                }else{
+                    System.out.println("El numero menor es: " + num2);
                 }
             }  
         }else{
-            if (num1 == num2){
+            if (num1 < num2){
                 if (num2 > num3){
-                    System.out.println("numero 1 es igual a numero 2 (" + num2 + ") , ambos son mayores a " + num3);
+                    System.out.println("El numero mayor es: " + num2);
+                    if (num3 > num1){
+                        System.out.println("el numero menor es: "+ num1);
+                    }else{
+                        System.out.println("el numero menor es: "+ num3);
+                    }
                 }else{
-                    System.out.println("el numero mayor es: " + num3);
+                    if (num2 < num3){
+                        System.out.println("El numero mayor es: " + num3);
+                    }else{
+                        System.out.println("El numero menor es: " + num1);
+                    }
                 }
             }else{
-                if (num2 > num3){
-                    System.out.println("el numero mayor es: " + num2);
+                if (num1 > num3){
+                    System.out.println("El numero mayor es: " + num1);
+                    System.out.println("El numero menor es: " + num3);
                 }else{
-                    System.out.println("el numero mayor es: " + num3);
-                }    
-            }
+                    if (num1 < num3){
+                        System.out.println("El numero mayor es: " + num3);
+                        System.out.println("El numero menor es: " + num1);
+                    }else{
+                        System.out.println("todos los numeros son iguales");
+                    }
+                }
+            }  
+                 
         }
     }
 }

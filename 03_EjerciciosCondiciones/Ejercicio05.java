@@ -12,28 +12,28 @@ public class Ejercicio05{
         int num3 = numero.nextInt();
 
         if (num1 > num2){
-            if (num1 > num3){
+            if (num1 > num3 && num3 < num2){
                 System.out.println("Los numeros se ingresaron en Orden Descendente");
-            }else{
-                if (num1 == num3){
-                    System.out.println("Los numeros se ingresaron en Orden Descendente");
-                }else{
-                    System.out.println("Los numeros se ingresaron en desorden");
-                }
+            }else{   
+                System.out.println("Los numeros se ingresaron en desorden");
             }  
         }else{
-            if (num1 == num2){
-                if (num2 > num3){
-                    System.out.println("Los numeros se ingresaron en desorden");
-                }else{
+            if (num1 < num2){
+                if (num2 < num3){
                     System.out.println("Los numeros se ingresaron en Orden Ascendente");
+                }else{
+                    System.out.println("Los numeros se ingresaron en desorden");
                 }
             }else{
-                if (num2 > num3){
-                    System.out.println("Los numeros se ingresaron en desorden");
-                }else{
+                if (num1 < num3){
                     System.out.println("Los numeros se ingresaron en Orden Ascendente");
-                }    
+                }else{
+                    if (num1 > num3){
+                        System.out.println("Los numeros se ingresaron en Orden Descendente");
+                    }else{
+                        System.out.println("Todos los numeros son iguales");
+                    }
+                }   
             }
         }
     }
