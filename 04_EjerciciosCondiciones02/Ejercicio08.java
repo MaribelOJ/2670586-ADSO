@@ -10,8 +10,8 @@ public class Ejercicio08{
         System.out.print("Ingrese la altura del triangulo: ");
         float altura = datos.nextFloat();
 
-        if (base < 0 || altura < 0){
-            System.out.println("No se aceptan numeros negativos, vuelva a ingresar los datos");
+        if (base <= 0 || altura <= 0){
+            System.out.println("No se aceptan numeros iguales o menores a 0, vuelva a ingresar los datos");
             System.out.print(" ");
             System.out.print("Ingrese la base del triangulo: ");
             base = datos.nextFloat();

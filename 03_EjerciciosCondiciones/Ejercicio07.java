@@ -18,6 +18,25 @@ public class Ejercicio07{
             int digs3 = (num % 1000000000)/1000000;
             int digs4 = num / 1000000000;
 
+            if (digs3==0){
+                if (digs4 != 0){
+                    System.out.print("000");
+                }else{
+                    System.out.print("");
+                }
+            }else{
+                if(digs3 >= 1 && digs3 <= 9){
+
+                }
+                if(digs3 >= 10 && digs3 <= 99){
+
+                }
+                if(digs3 >= 100 && digs3 <= 999){
+
+                }
+
+            }
+
             System.out.println("Moneda : $ " + digs4 + "." + digs3 + "." + digs2 + "." + digs1);
         }else{
 
