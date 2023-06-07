@@ -15,6 +15,11 @@ public class Ejercicio04{
 
         float promedio = (nota1 + nota2 + nota3) / 3;
 
+        if ( nota1 <= 0 && nota1 > 10 || nota2 <= 0 && nota2 > 10 || nota3 <= 0 && nota3 > 10){
+
+            System.out.print("Introduzca notas validas entre 0 y 10");
+        }
+        
         if (promedio >= 7){
             System.out.print("La materia fue aprobada");
         }else{
