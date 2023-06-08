@@ -1,483 +1,320 @@
 import java.util.Scanner;
 public class Ejercicio09{
+
     public static void main (String[] args){
 
         Scanner fecha = new Scanner(System.in);
 
-        String text1 = "";
-        String text2 = "";
-        String text3 = "";
-
         System.out.print("Ingrese la fecha en formato ddmmaaaa: ");
         int num = fecha.nextInt();
 
-        int digs1 = num % 10000;
-        int digs2 = (num % 1000000)/10000;
-        int digs3 = (num / 1000000);
+        int day = (num / 1000000);
+        int month = (num % 1000000)/10000;
+        int year = num % 10000;
+       
+        System.out.println(day + " / " + month + " / " + year);
 
-        System.out.println(digs3 + " " + digs2 +" "+ digs1);
+        if (day > 9){
+            int d1 = day / 10;
+            int d2 = day % 10;
 
-        if (digs1 > 1999){
-            int cifra2 = (digs1 % 1000)/100;
-            int cifra3 = (digs1 % 100)/10;
-            int cifra4 = digs1 % 10;
-
-            if (cifra3 < 1){
-                if (cifra4 < 1){
-                        
-                    text1 = "DOSMIL";
-
-                }else{
-
-                    if (cifra4 / 2 == 1 && cifra4 % 2 == 0){
-                        text1 = "DOSMIL DOS";
-                    }else{
-                        if (cifra4 / 3 == 1 && cifra4 % 3 == 0){
-                            text1 = " DOSMIL TRES";
-                        }else{
-                            if (cifra4 / 4 == 1 && cifra4 % 4 == 0){
-                                text1 = " DOSMIL CUATRO";
-                            }else{
-                                if (cifra4 / 5 == 1 && cifra4 % 5 == 0){
-                                    text1 = " DOSMIL CINCO";
-                                }else{
-                                    if (cifra4 / 6 == 1 && cifra4 % 6 == 0){
-                                        text1 = "DOSMIL SEIS";
-                                    }else{
-                                        if (cifra4 / 7 == 1 && cifra4 % 7 == 0){
-                                            text1 = "DOSMIL SIETE";
-                                        }else{
-                                            if (cifra4 / 8 == 1 && cifra4 % 8 == 0){
-                                                text1 = " DOSMIL OCHO";
-                                            }else{
-                                                if (cifra4 / 9 == 1 && cifra4 % 9 == 0){
-                                                    text1 = " DOSMIL NUEVE";
-                                                }else{
-                                                    text1 = "DOSMIL UNO";
-                                                }
-                                            }
-                                        }                                   
-                                    }
-                                }
-
-                            }
-                        }
-                    }
+            if (d1 == 1){
+                if(d2 == 0){
+                    System.out.print("DIEZ DE ");
+                }else if(d2 == 1){
+                    System.out.print("ONCE DE ");
+                }else if(d2 == 2){
+                    System.out.print("DOCE DE ");
+                }else if(d2 == 3){
+                    System.out.print("TRECE DE ");
+                }else if(d2 == 4){
+                    System.out.print("CATORCE DE ");
+                }else if(d2 == 5){
+                    System.out.print("QUINCE DE ");
+                }else if(d2 == 6){
+                    System.out.print("DIECISEIS DE ");
+                }else if(d2 == 7){
+                    System.out.print("DIECISIETE DE ");
+                }else if(d2 == 8){
+                    System.out.print("DIECIOCHO DE ");
+                }else if(d2 == 9){
+                    System.out.print("DIECINUEVE DE ");
                 }
-            }else{
-                if (cifra3 / 2 == 1 && cifra3 % 2 == 0){
-                    if (cifra4 < 1){
-                            
-                        text1 = "DOSMIL VEINTE ";
-
-                    }else{
-
-                        if (cifra4 / 2 == 1 && cifra4 % 2 == 0){
-                            text1 = "DOSMIL VEINTIDOS";
-                        }else{
-                            if (cifra4 / 3 == 1 && cifra4 % 3 == 0){
-                                text1 = " DOSMIL VEINTITRES";
-                            }else{
-                                if (cifra4 / 4 == 1 && cifra4 % 4 == 0){
-                                    text1 = " DOSMIL VEINTICUATRO";
-                                }else{
-                                    if (cifra4 / 5 == 1 && cifra4 % 5 == 0){
-                                        text1 = " DOSMIL VEINTICINCO";
-                                    }else{
-                                        if (cifra4 / 6 == 1 && cifra4 % 6 == 0){
-                                            text1 = "DOSMIL VEINTISEIS";
-                                        }else{
-                                            if (cifra4 / 7 == 1 && cifra4 % 7 == 0){
-                                                text1 = "DOSMIL VEINTISIETE";
-                                            }else{
-                                                if (cifra4 / 8 == 1 && cifra4 % 8 == 0){
-                                                    text1 = " DOSMIL VEINTIOCHO";
-                                                }else{
-                                                    if (cifra4 / 9 == 1 && cifra4 % 9 == 0){
-                                                        text1 = " DOSMIL VEINTINUEVE";
-                                                    }else{
-                                                        text1 = "DOSMIL VEINTIUNO";
-                                                    }
-                                                }
-                                            }                                   
-                                        }
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                }
-
-            }
             
-                    
-
-        }else{
-            if (digs1 > 999){
-                int cifra2 = (digs1 % 1000)/100;
-                int cifra3 = (digs1 % 100)/10;
-                int cifra4 = digs1 % 10;
-
-                if (cifra3 < 1){
-                    if (cifra4 < 1){
-                            
-                        text1 = "MIL";
-
-                    }else{
-
-                        if (cifra4 / 2 == 1 && cifra4 % 2 == 0){
-                            text1 = "MIL DOS";
-                        }else{
-                            if (cifra4 / 3 == 1 && cifra4 % 3 == 0){
-                                text1 = " MIL TRES";
-                            }else{
-                                if (cifra4 / 4 == 1 && cifra4 % 4 == 0){
-                                    text1 = " MIL CUATRO";
-                                }else{
-                                    if (cifra4 / 5 == 1 && cifra4 % 5 == 0){
-                                        text1 = " MIL CINCO";
-                                    }else{
-                                        if (cifra4 / 6 == 1 && cifra4 % 6 == 0){
-                                            text1 = "MIL SEIS";
-                                        }else{
-                                            if (cifra4 / 7 == 1 && cifra4 % 7 == 0){
-                                                text1 = "MIL SIETE";
-                                            }else{
-                                                if (cifra4 / 8 == 1 && cifra4 % 8 == 0){
-                                                    text1 = " MIL OCHO";
-                                                }else{
-                                                    if (cifra4 / 9 == 1 && cifra4 % 9 == 0){
-                                                        text1 = " MIL NUEVE";
-                                                    }else{
-                                                        text1 = "MIL UNO";
-                                                    }
-                                                }
-                                            }                                   
-                                        }
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                }else{
-                    if (cifra3 / 2 == 1 && cifra3 % 2 == 0){
-                        if (cifra4 < 1){
-                                
-                            text1 = "MIL VEINTE ";
-
-                        }else{
-
-                            if (cifra4 / 2 == 1 && cifra4 % 2 == 0){
-                                text1 = "MIL VEINTIDOS";
-                            }else{
-                                if (cifra4 / 3 == 1 && cifra4 % 3 == 0){
-                                    text1 = " MIL VEINTITRES";
-                                }else{
-                                    if (cifra4 / 4 == 1 && cifra4 % 4 == 0){
-                                        text1 = " MIL VEINTICUATRO";
-                                    }else{
-                                        if (cifra4 / 5 == 1 && cifra4 % 5 == 0){
-                                            text1 = " MIL VEINTICINCO";
-                                        }else{
-                                            if (cifra4 / 6 == 1 && cifra4 % 6 == 0){
-                                                text1 = "MIL VEINTISEIS";
-                                            }else{
-                                                if (cifra4 / 7 == 1 && cifra4 % 7 == 0){
-                                                    text1 = "MIL VEINTISIETE";
-                                                }else{
-                                                    if (cifra4 / 8 == 1 && cifra4 % 8 == 0){
-                                                        text1 = " MIL VEINTIOCHO";
-                                                    }else{
-                                                        if (cifra4 / 9 == 1 && cifra4 % 9 == 0){
-                                                            text1 = " MIL VEINTINUEVE";
-                                                        }else{
-                                                            text1 = "MIL VEINTIUNO";
-                                                        }
-                                                    }
-                                                }                                   
-                                            }
-                                        }
-
-                                    }
-                                }
-                            }
-                        }
-                    }else{
-                        if (cifra3 / 3 == 1 && cifra3 % 3 == 0){
-                            if (cifra4 < 1){
-                                    
-                                text1 = "MIL TREINTA ";
-
-                            }else{
-
-                                if (cifra4 / 2 == 1 && cifra4 % 2 == 0){
-                                    text1 = "MIL TREINTA Y DOS";
-                                }else{
-                                    if (cifra4 / 3 == 1 && cifra4 % 3 == 0){
-                                        text1 = " MIL TREINTA Y TRES";
-                                    }else{
-                                        if (cifra4 / 4 == 1 && cifra4 % 4 == 0){
-                                            text1 = " MIL TREINTA Y CUATRO";
-                                        }else{
-                                            if (cifra4 / 5 == 1 && cifra4 % 5 == 0){
-                                                text1 = " MIL TREINTA Y CINCO";
-                                            }else{
-                                                if (cifra4 / 6 == 1 && cifra4 % 6 == 0){
-                                                    text1 = "MIL TREINTA Y SEIS";
-                                                }else{
-                                                    if (cifra4 / 7 == 1 && cifra4 % 7 == 0){
-                                                        text1 = "MIL TREINTA Y SIETE";
-                                                    }else{
-                                                        if (cifra4 / 8 == 1 && cifra4 % 8 == 0){
-                                                            text1 = " MIL TREINTA Y OCHO";
-                                                        }else{
-                                                            if (cifra4 / 9 == 1 && cifra4 % 9 == 0){
-                                                                text1 = " MIL TREINTA Y NUEVE";
-                                                            }else{
-                                                                text1 = "MIL TREINTA Y UNO";
-                                                            }
-                                                        }
-                                                    }                                   
-                                                }
-                                            }
-
-                                        }
-                                    }
-                                }
-                            }
-                        }else{
-
-                        }
-                    }
-
+            }else if (d1 == 2){
+                if(d2 == 0){
+                    System.out.print("VEINTE DE ");
+                }else if(d2 >= 1 && d2 <= 9){
+                    System.out.print("VENTI ");
                 }
+            }else if (d1 == 3){
+                if(d2 == 0){
+                    System.out.print("TREINTA DE ");
+                }else if(d2 == 1){
+                    System.out.print("TREINTA Y ");
+                }
+            }
 
-            }else{
+            if (d2 == 0){ 
+                System.out.print(" ");
+            }else if (d2 == 1){ 
+                if(d1 != 1){
+                    System.out.print("UNO DE ");
+                }   
+            }else if (d2 == 2){ 
+                if(d1 > 1 && d1 < 3){
+                    System.out.print("DOS DE ");
+                }
+            }else if (d2 == 3){ 
+                if(d1 > 1 && d1 < 3){
+                    System.out.print("TRES DE ");
+                }
+            }else if (d2 == 4){ 
+                if(d1 > 1 && d1 < 3){
+                    System.out.print("CUATRO DE ");
+                }
+            }else if (d2 == 5){ 
+                if(d1 > 1 && d1 < 3){
+                    System.out.print("CINCO DE ");
+                }
+            }else if (d2 == 6){ 
+                if(d1 > 1 && d1 < 3){
+                    System.out.print("SEIS DE ");
+                }
+            }else if (d2 == 7){ 
+                if(d1 > 1 && d1 < 3){
+                    System.out.print("SIETE DE ");
+                }
+            }else if (d2 == 8){ 
+                if(d1 > 1 && d1 < 3){
+                    System.out.print("OCHCO DE ");
+                }
+            }else if (d2 == 9){ 
+                if(d1 > 1 && d1 < 3){
+                    System.out.print("NUEVE DE ");
+                }
+            }
 
+        }else if (day <= 9){
+            if(day == 1){
+                System.out.print("UNO DE ");
+            }else if(day == 2){
+                System.out.print("DOS DE ");
+            }else if(day == 3){
+                System.out.print("TRES DE ");
+            }else if(day == 4){
+                System.out.print("CUATRO DE ");
+            }else if(day == 5){
+                System.out.print("CINCO DE ");
+            }else if(day == 6){
+                System.out.print("SEIS DE ");
+            }else if(day == 7){
+                System.out.print("SIETE DE ");
+            }else if(day == 8){
+                System.out.print("OCHO DE ");
+            }else if(day == 9){
+                System.out.print("NUEVE DE ");
             }
         }
 
-        if (digs2 == 12){
+        if (month > 9){
+            int d1 = month / 10;
+            int d2 = month % 10;
 
-            text2 = "DICIEMBRE";
-        }else{
-            if (digs2 == 11){
-
-                text2 = "NOVIEMBRE";
-            }else{
-                if (digs2 == 10){
-
-                    text2 = "OCTUBRE";
-                }else{
-                    if (digs2 == 9){
-
-                        text2 = "SEPTIEMBRE";
-                    }else{
-                        if (digs2 == 8){
-
-                            text2 = "AGOSTO";
-                        }else{
-                            if (digs2 == 7){
-
-                                text2 = "JULIO";
-                            }else{
-                                if (digs2 == 6){
-
-                                    text2 = "JUNIO";
-                                }else{
-                                    if (digs2 == 5){
-
-                                        text2 = "MAYO";
-                                    }else{
-                                        if (digs2 == 4){
-
-                                            text2 = "ABRIL";
-                                        }else{
-                                            if (digs2 == 3){
-
-                                                text2 = "MARZO";
-                                            }else{
-                                                if (digs2 == 2){
-
-                                                    text2 = "FEBRERO";
-                                                }else{
-                                                    if (digs2 == 1){
-
-                                                        text2 = "ENERO";
-                                                    }
-                                                }
-                                            }
-
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+            if (d1 == 1){
+                if(d2 == 0){
+                    System.out.print("OCTUBRE DEL ");
+                }else if(d2 == 1){
+                    System.out.print("NOVIEMBRE DEL ");
+                }else if(d2 == 2){
+                    System.out.print("DICIEMBRE DEL ");
                 }
+            }
+        }else if (month <= 9){
+            if(month == 1){
+                System.out.print("ENERO DEL ");
+            }else if(month == 2){
+                System.out.print("FEBRERO DEL ");
+            }else if(month == 3){
+                System.out.print("MARZO DEL ");
+            }else if(month == 4){
+                System.out.print("ABRIL DEL ");
+            }else if(month == 5){
+                System.out.print("MAYO DEL ");
+            }else if(month == 6){
+                System.out.print("JUNIO DEL ");
+            }else if(month == 7){
+                System.out.print("JULIO DEL ");
+            }else if(month == 8){
+                System.out.print("AGOSTO DEL ");
+            }else if(month == 9){
+                System.out.print("SEPTIEMBRE DEL ");
             }
         }
 
-        if (digs3 == 31){
+        if (year >= 1000 && year < 2999){
 
-            text3 = "TREINTA Y UNO";
-        }else{
-            if (digs3 == 30){
+            int d1 = (year / 1000);
+            int d2 = (year % 1000)/ 100;
+            int d3 = (year % 100)/ 10;
+            int d4 = (year % 10);
 
-                text3 = "TREINTA";
-            }else{
-                if (digs3 == 29){
-
-                    text3 = "VEINTINUEVE";
-                }else{
-                    if (digs3 == 28){
-
-                        text3 = "VEINTIOCHO";
-                    }else{
-                        if (digs3 == 27){
-
-                            text3 = "VEINTISIETE";
-                        }else{
-                            if (digs3 == 26){
-
-                                text3 = "VEINTISEIS";
-                            }else{
-                                if (digs3 == 25){
-
-                                    text3 = "VEINTICINCO";
-                                }else{
-                                    if (digs3 == 24){
-
-                                        text3 = "VEINTICUATRO";
-                                    }else{
-                                        if (digs3 == 23){
-
-                                            text3 = "VEINTITRES";
-                                        }else{
-                                            if (digs3 ==22){
-
-                                                text3 = "VEINTIDOS";
-                                            }else{
-                                                if (digs3 == 21){
-
-                                                    text3 = "VEINTIUNO";
-                                                }else{
-                                                    if (digs3 == 20){
-
-                                                        text3 = "VEINTE";
-                                                    }else{
-                                                        if (digs3 == 19){
-
-                                                            text3 = "DIECINUEVE";
-                                                        }else{
-                                                            if (digs3 == 18){
-
-                                                                text3 = "DIECIOCHO";
-                                                            }else{
-                                                                if (digs3 == 17){
-
-                                                                    text3 = "DIECISIETE";
-                                                                }else{
-                                                                    if (digs3 == 16){
-
-                                                                        text3 = "DIECISEIS";
-                                                                    }else{
-                                                                        if (digs3 == 15){
-
-                                                                            text3 = "QUINCE";
-                                                                        }else{
-                                                                            if (digs3 == 14){
-
-                                                                                text3 = "CATORCE";
-                                                                            }else{
-                                                                                if (digs3 == 13){
-
-                                                                                    text3 = "TRECE";
-                                                                                }else{
-                                                                                    if (digs3 == 12){
-
-                                                                                        text3 = "DOCE";
-                                                                                    }else{
-                                                                                        if (digs3 == 11){
-
-                                                                                            text3 = "ONCE";
-                                                                                        }else{
-                                                                                            if (digs3 == 10){
-
-                                                                                                text3 = "DIEZ";
-                                                                                            }else{
-                                                                                                if (digs3 == 9){
-
-                                                                                                    text3 = "NUEVE";
-                                                                                                }else{
-                                                                                                    if (digs3 == 8){
-
-                                                                                                        text3 = "OCHO";
-                                                                                                    }else{
-                                                                                                        if (digs3 == 7){
-
-                                                                                                            text3 = "SIETE";
-                                                                                                        }else{
-                                                                                                            if (digs3 == 6){
-
-                                                                                                                text3 = "SEIS";
-                                                                                                            }else{
-                                                                                                                if (digs3 == 5){
-
-                                                                                                                    text3 = "CINCO";
-                                                                                                                }else{
-                                                                                                                    if (digs3 == 4){
-
-                                                                                                                        text3 = "CUATRO";
-                                                                                                                    }else{
-                                                                                                                        if (digs3 == 3){
-
-                                                                                                                            text3 = "TRES";
-                                                                                                                        }else{
-                                                                                                                            if (digs3 == 2){
-
-                                                                                                                                text3 = "DOS";
-                                                                                                                            }else{
-                                                                                                                                if (digs3 == 1){
-
-                                                                                                                                    text3 = "UNO";
-                                                                                                                                }
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            }
-                                                                                                        }
-                                                                                                    }
-                                                                                                }
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    } 
-                                                }
-                                            }
-
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+            if (d1 == 1){ 
+                
+                System.out.print("MIL ");
+                
+            }else if (d1 == 2){ 
+                
+                System.out.print("DOS MIL "); 
             }
+
+            if (d2==0) {
+				System.out.print("");
+			}else if(d2==1){
+				if(d3==0 && d4==0){
+					System.out.print("CIEN ");
+				}else{
+					System.out.print("CIENTO ");
+				}
+			}else if(d2==2){
+				System.out.print("DOSCIENTOS ");
+			}else if(d2==3){
+				System.out.print("TRESCIENTOS ");
+			}else if(d2==4){
+				System.out.print("CUATROCIENTOS ");
+			}else if(d2==5){
+				System.out.print("QUINIENTOS ");
+			}else if(d2==6){
+				System.out.print("SEISCIENTOS ");
+			}else if(d2==7){
+				System.out.print("SETECIENTOS ");
+			}else if(d2==8){
+				System.out.print("OCHOCIENTOS ");
+			}else if(d2==9){
+				System.out.print("NOVECIENTOS ");
+			}
+
+            if(d3==1){
+				if (d4==0){
+					System.out.print("DIEZ");
+				}else if(d4==1){
+					System.out.print("ONCE");
+				}else if(d4==2){
+					System.out.print("DOCE ");
+				}else if(d4==3){
+					System.out.print("TRECE ");
+				}else if(d4==4){
+					System.out.print("CATORCE ");
+				}else if(d4==5){
+					System.out.print("QUINCE ");
+				}else if(d4==6){
+					System.out.print("DIECISEIS ");
+				}else if(d4==7){
+					System.out.print("DIECISIETE ");
+				}else if(d4==8){
+					System.out.print("DIECIOCHO ");
+				}else if(d4==9){
+					System.out.print("DIECINUEVE ");
+				}
+			}else if(d3==2){
+				if (d4==0) {
+					System.out.print("VEINTE ");
+				}else{
+					System.out.print("VEINTI");
+				}
+			}else if(d3==3){
+				if (d4==0) { 
+					System.out.print("TREINTA ");
+				}else{
+					System.out.print("TREINTA Y ");
+				}
+			}else if(d3==4){
+				if (d4==0) {
+					System.out.print("CUARENTA ");
+				}else{
+					System.out.print("CUARENTA Y ");
+				}
+			}else if(d3==5){
+				if (d4==0) {
+					System.out.print("CINCUENTA ");
+				}else{
+					System.out.print("CINCUENTA Y ");
+				}
+			}else if(d3==6){
+				if (d4==0) {
+					System.out.print("SESENTA ");
+				}else{
+					System.out.print("SESENTA Y ");
+				}
+			}else if(d3==7){
+				if (d4==0) {
+					System.out.print("SETENTA ");
+				}else{
+					System.out.print("SETENTA Y ");
+				}
+			}else if(d3==8){
+				if (d4==0) {
+					System.out.print("OCHENTA ");
+				}else{
+					System.out.print("OCHENTA Y ");
+				}
+			}else if(d3==9){
+				if (d4==0) {
+					System.out.print("NOVENTA ");
+				}else{
+					System.out.print("NOVENTA Y ");
+				}
+			}
+
+            if (d4==0){
+				System.out.print("");
+			}else if(d4==1){
+				if (d3==0) {
+					System.out.print("UNO ");
+				}
+				if (d3>=2 && d3<=9) {
+					System.out.print("UNO ");
+				}
+			}else if(d4==2){
+				if (d3!=1) {
+					System.out.print("DOS ");
+				}
+			}else if(d4==3){
+				if (d3!=1) {
+					System.out.print("TRES ");
+				}
+			}else if(d4==4){
+				if (d3!=1) {
+					System.out.print("CUATRO ");
+				}
+			}else if(d4==5){
+				if (d3!=1) {
+					System.out.print("CINCO ");
+				}
+			}else if(d4==6){
+				if (d3!=1) {
+					System.out.print("SEIS ");
+				}
+			}else if(d4==7){
+				if (d3!=1) {
+					System.out.print("SIETE ");
+				}
+			}else if(d4==8){
+				if (d3!=1) {
+					System.out.print("OCHO ");
+				}
+			}else if(d4==9){
+				if (d3!=1) {
+					System.out.print("NUEVE ");
+				}
+			}
         }
-
-        System.out.println("El texto del numero es: " + text3 + " DE " + text2 + " DEL ANO " + text1);
-   
-
     }
 }
+
+        
+   
+
+
+
+        

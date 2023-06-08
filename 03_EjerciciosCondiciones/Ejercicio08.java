@@ -468,12 +468,7 @@ public class Ejercicio08{
 				if (d8!=1) {
 					System.out.print("NUEVE");
 				}
-			}
-
-
-
-
-			
+			}	
 		}else{
 			System.out.println(" => Numero invalido. ");
 		}
