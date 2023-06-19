@@ -18,6 +18,17 @@ public class Ejercicio07{
         int resultado3;
         int mult= 1;
         int cont = 0;
+        int numM = 0;
+
+        if (num1 > num2 && num1 > num3 ){
+            numM = num1;
+        }else if (num1 > num2 && num1 < num3 ){
+            numM = num3;
+        }else if (num1 < num2 && num2 > num3 ){
+            numM = num2;
+        }else if (num1 < num2 && num2 < num3 ){
+            numM = num3;
+        }
         
         while(mcm == 0){
             
@@ -49,7 +60,7 @@ public class Ejercicio07{
                 pri = pri + 1;
             }
 
-            for( int i = 1; i <= 100; i++){
+            for( int i = 1; i <= numM; i++){
 			
                 if(pri % i == 0){
                     cont = cont + 1;
