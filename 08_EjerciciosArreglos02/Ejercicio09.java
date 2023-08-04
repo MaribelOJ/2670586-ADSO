@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Ejercicio06{
+public class Ejercicio09{
     public static void main(String [] args){
 
         Scanner entrada = new Scanner(System.in);
@@ -12,6 +12,7 @@ public class Ejercicio06{
         int num = entrada.nextInt();
 
         int enteros [] = new int[size];
+        int posicion = -1;
         int cont = 0;
         
 
@@ -31,17 +32,15 @@ public class Ejercicio06{
         for( int i = 0; i < size; i++){
 
             if(enteros[i] == num){
+                posicion = i;
                 cont = cont + 1;
             }
         }
-        
-        if(cont == 0){
-            System.out.print("El numero " + num + " aparece " + cont + " veces");
-        }else{ 
-            System.out.print("El numero " + num + " aparece " + cont + " vez");
-        }
-        
 
-        
+        if(cont != 0){
+            System.out.print("Se encontro el numero " + num + " en la posicion " + posicion);
+        }else{
+            System.out.print("Como no se encontro el numero " + num + ", la posicion es igual a " + posicion);
+        }
     }
 }
