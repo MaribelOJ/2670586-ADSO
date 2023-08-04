@@ -33,11 +33,11 @@ public class Ejercicio03{
                 nombre = opt.nextLine();
 
 
-                if(indice > 0 && indice < 100){
+                if(indice >= 0 && indice < 100){
                     boolean invalido = false;
 
                     for(int p = 0; p < indice; p++){
-                        if(arr[p].equalsIgnoreCase(nombre)){
+                        if( arr[p] != null && arr[p].equalsIgnoreCase(nombre)){
                             System.out.print(" Ya se encuentra registrado, intente con otro nombre");
                             invalido=true;
                             
@@ -50,14 +50,10 @@ public class Ejercicio03{
                         memoria = memoria - 1;
                     }
 
-                }else{
-                    arr[indice] = nombre;
-                    indice = indice + 1;
-                    memoria = memoria - 1;
                 }
     
             }else if(num == 2){
-                System.out.print(" List Clientes: {");
+                System.out.print(" Lista Clientes: {");
 
                 for(int e = 0; e < memoria; e++){
                     if(e == 0){
@@ -73,7 +69,8 @@ public class Ejercicio03{
             }else if(num == 3){
 
                 System.out.print("Ingrese el nombre que desea ubicar: ");
-                nombre = opc.next();
+                nombre = opt.nextLine();
+
                 
                 for( int l = 0; l< indice; l++){
                         if(arr[l].equalsIgnoreCase(nombre)){
@@ -81,30 +78,40 @@ public class Ejercicio03{
                         }
                 }
 
-                System.out.print("Ingrese el nuevo nombre: ");
-                nombre = opc.next();
-                arr[spot] = nombre;
+                if (spot != -1){
+                    System.out.print("Ingrese el nuevo nombre: ");
+                    nombre = opt.nextLine();
+                    arr[spot] = nombre;
+                }else{
+                    System.out.print("El nombre no se encontró, intente de nuevo");
+                }
+
+                
     
             }else if(num == 4){
                 System.out.print("Ingrese el nombre que desea eliminar: ");
-                nombre = opc.next();
+                nombre = opt.nextLine();
+                spot = -1;
+
                 for( int l = 0; l< indice; l++){
                         if(arr[l].equalsIgnoreCase(nombre)){
                             spot = l;
                         }
                 }
 
-                for(int p = spot; p < indice; p++){
+                if(spot != -1){
+                    for(int p = spot; p < indice; p++){
 
-                    if(p != memoria - 1){
-                        arr[p] = arr[p + 1];
-                    }else{
-                        arr[p] = "";
+                        if(p != memoria - 1){
+                            arr[p] = arr[p + 1];
+                        }else{
+                            arr[p] = "";
+                        }
                     }
-                    
 
+                }else{
+                    System.out.print("El nombre no se encontro, intente de nuevo");
                 }
-                memoria = memoria + 1;
 
                 System.out.print(" Lista Clientes: {");
 
@@ -117,6 +124,9 @@ public class Ejercicio03{
                 }
 
                 System.out.println(" }");
+
+                memoria = memoria + 1;
+                indice = indice - 1;
     
             }     
         }      

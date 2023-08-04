@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Ejercicio01{
     public static void main(String[]args){
        Scanner dato = new Scanner(System.in);
+       Scanner dato2 = new Scanner(System.in);
        
        System.out.print("Ingrese el tamano del arreglo: ");
        int size = dato.nextInt();
@@ -15,7 +16,7 @@ public class Ejercicio01{
        for(int i = 0; i < size;i++){
 
            System.out.print(" Ingrese un texto: ");
-           info = dato.next();
+           info = dato2.nextLine();
            arr2[i] = info;    
        }
 
