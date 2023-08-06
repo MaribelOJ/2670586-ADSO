@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Ejercicio10{
     public static void main(String [] args){
@@ -12,8 +13,6 @@ public class Ejercicio10{
         int num = 0;
 
         int arr[]= new int[size];
-        
-        System.out.println(t);
     
         System.out.print("Arreglo Original: { ");
 
@@ -31,62 +30,73 @@ public class Ejercicio10{
         System.out.println(" }");
         
 
-        for(int i = 0; i < size-1; i++){
+        for(int i = 0; i < size; i++){
             
-            for(int p = 0; p < size; p++){
+            for(int p = 0; p < i; p++){
                 
-                if(p > i && arr[p] != num){
+                if(i!= 0){
                     if(arr[i] == arr[p]){
                         t = t - 1;
-                        num = arr[p];
                         cont = cont + 1;
+                        p = i;
                     }
                 } 
             }
         }
 
-        System.out.println(t);
-        int posiciones[] = new int[cont];
-        int arr2[]= new int[t];
-        cont = 0;
-
-        System.out.print("las posiciones son: {");
-
-        for(int i = 0; i < size-1; i++){
-            
-            for(int p = 0; p < size; p++){
+        if(cont != 0){
+            int posiciones[] = new int[cont];
+            int arr2[]= new int[t];
+            cont = 0;
+            num = 0;
+            for(int i = 0; i < size; i++){
                 
-                if(p > i && arr[p] != num){
-                    if(arr[i] == arr[p]){
-                        posiciones[cont] = p;
-                        num = arr[p];
-                        cont= cont + 1;
-                        System.out.print(posiciones[cont] + ", ");
-                    }
-                } 
+                for(int p = 0; p < i; p++){
+                    
+                    if(i!= 0){
+                        if(arr[i] == arr[p]){
+                            posiciones[cont] = i;                           
+                            cont= cont + 1;
+                            p = i;    
+                        }
+                    } 
+                }
             }
-        }
-        System.out.println(" }");
 
-        cont = 0;
-        int p=0;
-        System.out.print("Arreglo nuevo: { ");
+            cont = 0;
+            boolean seRepite = false;
 
-        for(int i = 0; i < size; i++){
-            if(posiciones[p] != i){
-                arr2[cont] = arr[i];
-                if(cont == t-1){
-                    System.out.print(arr2[cont]);
-                }else{
-                    System.out.print(arr2[cont] + ", ");
+            Arrays.sort(posiciones);
+            
+            for(int i = 0; i < size; i++){
+
+                for(int p = 0; p < posiciones.length; p++){
+
+                    if( posiciones[p] == i){
+                        seRepite = true;   
+                    }
                 }
 
-                cont = cont + 1;
-            }else{
-                p=p+1;
+                if(seRepite == false){
+                    arr2[cont] = arr[i];
+                    cont = cont + 1;
+                }else{
+                    seRepite = false;
+                }
+
             }
+
+            System.out.print("Arreglo nuevo: { ");
             
-        }
-        System.out.println(" }");
+            for(int i = 0; i < arr2.length ; i++){
+                if(i == 0){
+                    System.out.print(arr2[i]);
+                }else{
+                    System.out.print(", " + arr2[i]);
+                }
+            }
+            System.out.println(" }");
+
+        }    
     }
 }
