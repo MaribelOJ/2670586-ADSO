@@ -1,13 +1,13 @@
 import java.util.Date;
 public class tarjetaDebito{
-    String titular;
-    String numeroTarjeta;
-    String banco;
-    int dineroTotal;
-    int montoMax;
-    String [] transacciones;
-    String clave;
-    String estado;
+    private String titular;
+    private String numeroTarjeta;
+    private String banco;
+    private int dineroTotal;
+    private int montoMax;
+    private String [] transacciones;
+    private String clave;
+    private String estado;
 
     public tarjetaDebito(String titular, String numeroTarjeta, String banco, int dineroTotal, int montoMax, String clave, String estado){
         this.titular = titular;
@@ -20,35 +20,57 @@ public class tarjetaDebito{
         this.estado = estado;
     }
 
-    public String disminuirSaldo(int monto){
+    public boolean disminuirSaldo(int monto, String pass){
 
-        if(monto <= montoMax && estado.equals("ACTIVA")){
-            this.dineroTotal = dineroTotal - monto;
+        if(pass.equals(clave)){
+            if(monto > 0 &&  monto <= montoMax && estado.equals("ACTIVA")){
+                this.dineroTotal = dineroTotal - monto;
 
-            System.out.println("la transaccion fue Exitosa!");
-            int indice = registrarTransaccion("RETIRO", monto, estado);
-            imprimirDetalle();
-                        
-            return transacciones[indice];  
+                System.out.println("   ===> TRANSACCION EXITOSA EN TARJETA <===");
+                registrarTransaccion("RETIRO", monto, estado);
+                imprimirDetalle();
+                            
+                return true;
+
+            }else{
+
+                System.out.println("   ===> ERROR EN MONTO INGRESADO <===");
+                registrarTransaccion("RETIRO DENEGADO", monto, estado);
+                imprimirDetalle();
+                return false;
+            } 
 
         }else{
+            System.out.println("   ===> ERROR EN DISMINUIR SALDO <===");
+            registrarTransaccion("DISMINUIRSALDO", monto, "ERROR");
+            return false;
+        }
 
-            System.out.println("El monto pasa el limite permitido");
-            int indice = registrarTransaccion("RETIRO DENEGADO", monto, estado);
-            imprimirDetalle();
-            return transacciones[indice];
-        }    
+              
     }
 
-    public String aumentarSaldo(int monto){
-        System.out.println("la transaccion fue Exitosa!");
-        this.dineroTotal = dineroTotal + monto;
-        int indice = registrarTransaccion("DEPOSITO", monto, estado);
-        imprimirDetalle();
-        return transacciones[indice];
+    public boolean aumentarSaldo(int monto, String pass){
+        if(pass.equals(clave)){
+            if(monto > 0){
+                this.dineroTotal = dineroTotal + monto;
+                System.out.println("   ===> TRANSACCION EXITOSA EN TARJETA");
+                registrarTransaccion("DEPOSITO", monto, estado);
+                imprimirDetalle();
+                return true;
+            }else{
+                System.out.println("   ===> ERROR EN MONTO INGRESADO <===");
+                registrarTransaccion("AUMENTOSALDO", monto, "ERROR");
+                return false;
+            }
+        }else{
+            System.out.println("   ===> ERROR EN AUMENTO DE SALDO <===");
+            registrarTransaccion("AUMENTOSALDO", monto, "ERROR");
+            return false;
+        }
+        
     }
 
-    public int registrarTransaccion(String tipo, int monto, String estado){
+    public void registrarTransaccion(String tipo, int monto, String estado){
 
         Date fecha = new Date();
         String texto = fecha.toString() + " - " + tipo + " - " + monto + " - " + estado;
@@ -64,14 +86,12 @@ public class tarjetaDebito{
         
         if(indice != -1){
             transacciones[indice] = texto;
-            return indice;
         }else{
             for(int i = 0; i < transacciones.length - 1 ; i++){
                 transacciones[i] = transacciones[i+1];
             }
 
             transacciones[transacciones.length -1] = texto;
-            return 9;
         }
 
     }
@@ -96,7 +116,54 @@ public class tarjetaDebito{
         System.out.println("-----------------------------------------");
     }
 
+    public void verHistorial(String pass){
+        if(pass.equals(clave)){
+            registrarTransaccion("HISTORIAL", 0, "OK");
+            for(int i = 0; i < transacciones.length; i++){
+                if(transacciones[i] != null){
+                    System.out.println(" => " + transacciones[i]);
+                }        
+            }
 
+        }else{
+            
+            System.out.println(" ===> ACCESO DENEGADO DESDE LA TARJETA");
+            registrarTransaccion("HISTORIAL", 0, "ERROR");
+        }
+    }
 
+    public int getSaldo(String pass){
+        if(pass.equals(clave)){
+            registrarTransaccion("CONSULTASALDO", 0, "OK");
+            return dineroTotal;
+
+        }else{
+            registrarTransaccion("CONSULTASALDO", 0, "ERROR");
+            return -1;
+        }
+    }
+
+  
+    public boolean validarClave(String password){
+        if( password.equals(clave)){
+            registrarTransaccion("VALIDARCLAVE", 0, "OK");
+            return true;
+        }else{
+            registrarTransaccion("VALIDARCLAVE", 0, "ERROR");
+            return false;
+        }
+    }
+
+    public boolean validarEstadoActivo(){
+        if( estado.equals("ACTIVA")){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public String getNumero(){
+        return numeroTarjeta;
+    }
 
 }
