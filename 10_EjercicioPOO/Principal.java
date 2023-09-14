@@ -7,7 +7,8 @@ public class Principal{
         // cajero02.imprimirDetalle();
 
         cajero02.abastecerCajero(1000, 1000, 500, 500);
-        cajero02.abastecerCajero(2000, 2000, 500, 500);
+        // cajero02.imprimirDetalle();
+        // cajero02.abastecerCajero(2000, 2000, 500, 500);
         // cajero02.imprimirDetalle();
         // cajero02.verHistorialCajero();
 
@@ -27,9 +28,20 @@ public class Principal{
         // tarjeta01.verHistorial("n4565");
         // tarjeta01.verHistorial("mari123");
 
-        cajero02.consignarTarjeta(tarjeta01, "1231", 0, 0, 0, 0);
+        // cajero02.consignarTarjeta(tarjeta01, "1231", 0, 0, 0, 0);
+
+        // cajero02.retirarDineroTarjeta(tarjeta01, "mari123", 10, 5, 4, 1);
+
+        tarjeta01.imprimirDetalle();
+        // cajero02.imprimirDetalle();
+
+        cajero02.verHistorialTarjeta(tarjeta01, "mari123");
+        cajero02.consultarSaldoTarjeta(tarjeta01, "mari123");
+        cajero02.cambiarClave(tarjeta01, "mari123", "123mari");
         
-        cajero02.imprimirDetalle();
+        
+
+
 
     }
 }

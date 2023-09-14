@@ -26,8 +26,8 @@ public class tarjetaDebito{
             if(monto > 0 &&  monto <= montoMax && estado.equals("ACTIVA")){
                 this.dineroTotal = dineroTotal - monto;
 
-                System.out.println("   ===> TRANSACCION EXITOSA EN TARJETA <===");
-                registrarTransaccion("RETIRO", monto, estado);
+                System.out.println("   ===> RETIRO EXITOSO EN TARJETA<===");
+                registrarTransaccion("DISMINUIRSALDO", monto, "OK");
                 imprimirDetalle();
                             
                 return true;
@@ -35,14 +35,15 @@ public class tarjetaDebito{
             }else{
 
                 System.out.println("   ===> ERROR EN MONTO INGRESADO <===");
-                registrarTransaccion("RETIRO DENEGADO", monto, estado);
+                registrarTransaccion("DISMUNUIRSALDO", monto, "ERROR MONTO");
                 imprimirDetalle();
                 return false;
             } 
 
         }else{
-            System.out.println("   ===> ERROR EN DISMINUIR SALDO <===");
-            registrarTransaccion("DISMINUIRSALDO", monto, "ERROR");
+            System.out.println("   ===> ERROR EN PASSWORD <===");
+            registrarTransaccion("DISMINUIRSALDO", monto, "ERROR PASSWORD");
+            imprimirDetalle();
             return false;
         }
 
@@ -53,18 +54,20 @@ public class tarjetaDebito{
         if(pass.equals(clave)){
             if(monto > 0){
                 this.dineroTotal = dineroTotal + monto;
-                System.out.println("   ===> TRANSACCION EXITOSA EN TARJETA");
-                registrarTransaccion("DEPOSITO", monto, estado);
+                System.out.println("   ===> DEPOSITO EXITOSO EN TARJETA");
+                registrarTransaccion("AUMENTOSALDO", monto, "OK");
                 imprimirDetalle();
                 return true;
             }else{
                 System.out.println("   ===> ERROR EN MONTO INGRESADO <===");
                 registrarTransaccion("AUMENTOSALDO", monto, "ERROR");
+                imprimirDetalle();
                 return false;
             }
         }else{
             System.out.println("   ===> ERROR EN AUMENTO DE SALDO <===");
             registrarTransaccion("AUMENTOSALDO", monto, "ERROR");
+            imprimirDetalle();
             return false;
         }
         
@@ -156,8 +159,10 @@ public class tarjetaDebito{
 
     public boolean validarEstadoActivo(){
         if( estado.equals("ACTIVA")){
+            registrarTransaccion("VALIDARESTADO", 0, "OK");
             return true;
         }else{
+            registrarTransaccion("VALIDARESTADO", 0, "ERROR");
             return false;
         }
     }
@@ -165,5 +170,32 @@ public class tarjetaDebito{
     public String getNumero(){
         return numeroTarjeta;
     }
+
+    public void setClave(String pass){
+        this.clave = pass;
+        
+        imprimirDetalle();
+    }
+
+    public boolean validarDineroDisponible(int monto){
+        if(dineroTotal >= monto){
+            registrarTransaccion("VALIDARDINERODISPONIBLE", 0, "OK");
+            return true;
+        }else{
+            registrarTransaccion("VALIDARDINERODISPONIBLE", 0, "ERROR");
+            return false;
+        }
+    }
+
+    public boolean validarMontoMax(int monto){
+        if(montoMax >= monto){
+            registrarTransaccion("VALIDARMONTOMAXIMO", 0, "OK");
+            return true;
+        }else{
+            registrarTransaccion("VALIDARMONTOMAXIMO", 0, "ERROR");
+            return false;
+        }
+    }
+
 
 }

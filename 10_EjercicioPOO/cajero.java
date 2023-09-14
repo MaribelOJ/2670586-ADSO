@@ -169,8 +169,8 @@ public class cajero{
                     registrarTransaccion("CONSIGNACION", tarjeta.getNumero(), monto,  "ERROR MONTO");
                 }
             }else{
-                 System.out.println("   ===> ERROR ESTADO - CONSIGNAR DINERO <===");
-            registrarTransaccion("CONSIGNACION", tarjeta.getNumero(), monto,  "ERROR ESTADO");
+                System.out.println("   ===> ERROR ESTADO - CONSIGNAR DINERO <===");
+                registrarTransaccion("CONSIGNACION", tarjeta.getNumero(), monto,  "ERROR ESTADO");
             }
 
         }else{
@@ -179,12 +179,124 @@ public class cajero{
         }
     }
 
-    // public void verHistorialTarjeta(tarjetaDebito tarjeta, String clave){
+
+    public void retirarDineroTarjeta(tarjetaDebito tarjeta, String clave, int cant_10, int cant_20, int cant_50, int cant_100){
+        
+        if(tarjeta.validarClave(clave)){
+
+            if(tarjeta.validarEstadoActivo()){
 
 
-    // }
+                int monto = 0;
+
+                if(this.cant_10 < cant_10){
+
+                    System.out.println("   ===> ERROR CANT BILLETES - EL MONTO DE BILLETES DE 10 MIL NO DISPONIBLE <===");
+                    registrarTransaccion("RETIRO", tarjeta.getNumero(), monto,  "ERROR CANT BILLETES");
+
+                } else if(this.cant_20 < cant_20){
+
+                    System.out.println("   ===> ERROR CANT BILLETES - EL MONTO DE BILLETES DE 20 MIL NO DISPONIBLE <===");
+                    registrarTransaccion("RETIRO", tarjeta.getNumero(), monto,  "ERROR CANT BILLETES");
+                    
+                } else if(this.cant_50 < cant_50){
+
+                    System.out.println("   ===> ERROR CANT BILLETES - EL MONTO DE BILLETES DE 50 MIL NO DISPONIBLE <===");
+                    registrarTransaccion("RETIRO", tarjeta.getNumero(), monto,  "ERROR CANT BILLETES");
+                    
+                }else if(this.cant_100 < cant_100){
+
+                    System.out.println("   ===> ERROR CANT BILLETES - EL MONTO DE BILLETES DE 100 MIL NO DISPONIBLES <===");
+                    registrarTransaccion("RETIRO", tarjeta.getNumero(), monto,  "ERROR CANT BILLETES");
+                    
+                }else{
+                    monto = (10000 * cant_10) + (20000 * cant_20) + (50000 * cant_50) + (100000 * cant_100);
+
+                    if(tarjeta.validarDineroDisponible(monto)){
+
+                        if(tarjeta.validarMontoMax(monto)){
+
+                            tarjeta.disminuirSaldo(monto,clave);
+
+                            this.cant_10 -= cant_10;
+                            this.cant_20 -= cant_20;
+                            this.cant_50 -= cant_50;
+                            this.cant_100 -= cant_100;
+
+                            System.out.println("   ===> RETIRO EXITOSO <===");
+                            registrarTransaccion("RETIRO", tarjeta.getNumero(), monto,  "OK");
+
+                        }else{
+                            System.out.println("   ===> ERROR MONTO MAXIMO- RETIRAR DINERO <===");
+                            registrarTransaccion("RETIRO", tarjeta.getNumero(), monto,  "ERROR MONTO MAXIMO");
+                        }
+
+                    }else{
+                        System.out.println("   ===> ERROR MONTO NO DISPONIBLE - RETIRAR DINERO <===");
+                        registrarTransaccion("RETIRO", tarjeta.getNumero(), monto,  "ERROR MONTO NO DISPONIBLE");
+                    }
 
 
+                }
+
+
+            }else{
+
+                System.out.println("   ===> ERROR ESTADO - RETIRAR DINERO <===");
+                registrarTransaccion("RETIRO", tarjeta.getNumero(), 0, "ERROR ESTADO");
+            }
+
+
+        }else{
+            System.out.println("   ===> ERROR PASSWORD - RETIRAR DINERO <===");
+            registrarTransaccion("RETIRO", tarjeta.getNumero(), 0, "ERROR PASSWORD");
+        }         
+        
+    }
+
+    public void verHistorialTarjeta(tarjetaDebito tarjeta , String clave){
+
+        if(tarjeta.validarClave(clave)){
+
+            tarjeta.verHistorial(clave);
+            
+            registrarTransaccion("VERHISTORIAL", tarjeta.getNumero(), 0, "OK");
+        }else {
+            registrarTransaccion("VERHISTORIAL", tarjeta.getNumero(), 0, "ERROR PASSWORD");
+        }
+        
+    }
+
+    public void consultarSaldoTarjeta(tarjetaDebito tarjeta, String clave){
+
+        if(tarjeta.validarClave(clave)){
+            int saldo = tarjeta.getSaldo(clave);
+
+            System.out.println("----------SALDO ACTUAL:-------------");
+            System.out.println("|        "+ saldo + "        |");
+            System.out.println("------------------------------------");
+
+            registrarTransaccion("CONSULTARSALDO", tarjeta.getNumero(), 0, "OK");
+        }else{
+
+            System.out.println("   ===> ERROR PASSWORD - CONSULTAR SALDO <===");
+            registrarTransaccion("CONSULTARSALDO", tarjeta.getNumero(), 0, "ERROR PASSWORD");
+        }
+    }
+
+    public void cambiarClave(tarjetaDebito tarjeta , String clave, String newPass){
+        if(tarjeta.validarClave(clave)){
+
+            tarjeta.setClave(newPass);
+
+            registrarTransaccion("CAMBIARCLAVE", tarjeta.getNumero(), 0, "OK");
+        }else{
+
+            System.out.println("   ===> ERROR PASSWORD - CAMBIAR CLAVE <===");
+            registrarTransaccion("CAMBIARCLAVE", tarjeta.getNumero(), 0, "ERROR PASSWORD");
+
+        }    
+    }
 
 }
 
