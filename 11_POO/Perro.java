@@ -89,4 +89,5 @@ public class Perro{
         //Energia
         energia = energia + (gramos/100);
     }
+
 }

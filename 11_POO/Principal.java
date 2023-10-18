@@ -10,6 +10,7 @@ public class Principal{
 
         Perro perro1 = new Perro("Dobby", "Maribel", 108, "pomeranio", 2.50, 60);
         perro1.comer(800);
+        // perro1.jugar(30, "activo");
         perro1.imprimirDetalle();
         
         
