@@ -14,6 +14,8 @@ public class Principal{
 		ListaUsuarios[7] = new Usuario("109902", "Julian Perez", "Calle 18", "VENDEDOR");
 		ListaUsuarios[8] = new Usuario("109903", "Carolina Tobon", "Calle 17", "VENDEDOR");
 		ListaUsuarios[9] = new Usuario("109904", "Carlos Perez", "Calle 16", "VENDEDOR");
+		ListaUsuarios[10] = new Usuario("1088340376", "Maribel Obando", "Calle 20", "CLIENTE");
+		ListaUsuarios[11] = new Usuario("26441375", "Ines Joven", "Calle 20", "VENDEDOR");
 
 		ListaProductos[0] = new Producto("1010", "Leche", 3800);
 		ListaProductos[1] = new Producto("1011", "Carne 1Kg", 25600);

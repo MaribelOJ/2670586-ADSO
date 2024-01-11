@@ -48,10 +48,10 @@ public class Facturador extends JFrame{
 		this.listaProductos = ListaProductos;
         this.totalFactura = 0;
 
-		initComponent();
+		initComponents();
 	}
 
-	public void initComponent(){
+	public void initComponents(){
 		this.listaJLabels = new JLabel [50];
 
 		Toolkit sistema = Toolkit.getDefaultToolkit();
@@ -301,7 +301,7 @@ public class Facturador extends JFrame{
 
 
 		input_id_producto = new JTextField();
-		input_id_producto.setHorizontalAlignment(JLabel.CENTER);
+		input_id_producto.setHorizontalAlignment(JTextField.CENTER);
 		restriccion.gridy = 9;
 		restriccion.gridx = 0;
 		restriccion.gridheight = 1;
@@ -313,7 +313,7 @@ public class Facturador extends JFrame{
 		contPrincipal.add( input_id_producto, restriccion );
 
 		input_nombre_producto = new JTextField();
-		input_nombre_producto.setHorizontalAlignment(JLabel.CENTER);
+		input_nombre_producto.setHorizontalAlignment(JTextField.CENTER);
 		restriccion.gridy = 9;
 		restriccion.gridx = 1;
 		restriccion.gridheight = 1;
@@ -325,7 +325,7 @@ public class Facturador extends JFrame{
 		contPrincipal.add( input_nombre_producto, restriccion );
 
 		input_cant_producto = new JTextField();
-		input_cant_producto.setHorizontalAlignment(JLabel.CENTER);
+		input_cant_producto.setHorizontalAlignment(JTextField.CENTER);
 		restriccion.gridy = 9;
 		restriccion.gridx = 2;
 		restriccion.gridheight = 1;
@@ -369,9 +369,11 @@ public class Facturador extends JFrame{
         Border borderColor = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.decode("#D5D5D5"));
         Border borderPadding = new EmptyBorder(3,10,3,10);
         Border borderGris = new CompoundBorder(borderColor, borderPadding);
+
+		
         
         for (int i=0; i<this.listaJLabels.length; i++) {
-            JLabel etq_temporal = new JLabel(" ");
+			JLabel etq_temporal = new JLabel(" ");            
             etq_temporal.setHorizontalAlignment( JLabel.RIGHT );
             etq_temporal.setFont( new Font("Arial", Font.PLAIN, 18) );
             etq_temporal.setOpaque(true);
@@ -432,6 +434,15 @@ public class Facturador extends JFrame{
 		};
 
 		btn_buscar_vendedor.addActionListener(evento_click_vendedor);
+
+		
+		ActionListener evento_click_agregar = new ActionListener(){
+			public void actionPerformed(ActionEvent event){
+				agregar_producto();
+			}
+		};
+
+		btn_add_producto.addActionListener(evento_click_agregar);
 
 		KeyListener evento_key_cliente = new KeyListener(){
 			public void keyPressed(KeyEvent e){
@@ -539,5 +550,32 @@ public class Facturador extends JFrame{
 				input_cant_producto.requestFocus();
 			}
 		}
+	}
+
+	public void agregar_producto(){
+		String id = input_id_producto.getText();
+		int amount = Integer.parseInt (input_cant_producto.getText());
+		int acumulado = 0;
+
+		for(int i = 0; i < listaProductos.length; i++){
+			if(listaProductos[i] != null && listaProductos[i].getId().equals(id)){
+				int price = listaProductos[i].getPrecio();
+				acumulado = (price * amount);
+
+				String imprimir = input_nombre_producto.getText()+" x "+amount+" --> "+ acumulado;
+				listaJLabels[indiceItems].setText(imprimir);
+				indiceItems++;
+				
+			}
+		}
+
+		input_id_producto.setText("");
+		input_nombre_producto.setText("");
+		input_cant_producto.setText("");
+		input_id_producto.requestFocus();
+
+		totalFactura += acumulado;
+
+		etq_total.setText("Total: " + totalFactura);
 	}
 }

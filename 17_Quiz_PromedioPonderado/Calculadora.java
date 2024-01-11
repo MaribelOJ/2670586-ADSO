@@ -52,132 +52,135 @@ public class Calculadora extends JFrame{
 		contPrincipal.setLayout(new GridBagLayout());
 		contPrincipal.setBorder( BorderFactory.createEmptyBorder(20, 20, 20, 20) );
         contPrincipal.setBackground(Color.WHITE);
-		GridBagConstraints restriccion = new GridBagConstraints();
+
+		GridBagConstraints mainLayout = new GridBagConstraints();
 
 		etq_calcular_promedio = new JLabel("CALCULAR PROMEDIO");
 		etq_calcular_promedio.setFont( new Font("Arial", Font.BOLD, 35) );
 		etq_calcular_promedio.setBorder( BorderFactory.createEmptyBorder(0, 0, 10, 0) );
-		restriccion.gridy = 0;
-		restriccion.gridx = 0;
-		restriccion.gridheight = 1;
-		restriccion.gridwidth = 4;
-		restriccion.weighty = 1;
-		restriccion.weightx = 100;
-		restriccion.fill = GridBagConstraints.CENTER;
-		contPrincipal.add( etq_calcular_promedio, restriccion );
+		mainLayout.gridy = 0;
+		mainLayout.gridx = 0;
+		mainLayout.gridheight = 1;
+		mainLayout.gridwidth = 4;
+		mainLayout.weighty = 2;
+		mainLayout.weightx = 100;
+		mainLayout.fill = GridBagConstraints.CENTER;
+		contPrincipal.add( etq_calcular_promedio, mainLayout );
 
         JPanel contDatosMateria = new JPanel();
 		contDatosMateria.setLayout(new GridBagLayout());
 		contDatosMateria.setBorder( BorderFactory.createEmptyBorder(10, 10, 10, 10) );
         contDatosMateria.setBackground(Color.decode("#e6e6e6"));
-        restriccion.gridx=0;
-        restriccion.gridy=1;
-        restriccion.gridheight=1;
-        restriccion.gridwidth=1;
-        restriccion.weighty=1;
-        restriccion.weightx=100;
-        restriccion.fill=GridBagConstraints.BOTH;
-        contPrincipal.add(contDatosMateria,restriccion);
+        mainLayout.gridx=0;
+        mainLayout.gridy=1;
+        mainLayout.gridheight=1;
+        mainLayout.gridwidth=1;
+        mainLayout.weighty=12;
+        mainLayout.weightx=100;
+        mainLayout.fill=GridBagConstraints.BOTH;
+        contPrincipal.add(contDatosMateria,mainLayout);
+
+		GridBagConstraints secondPanel = new GridBagConstraints();
 
 
 		etq_materia = new JLabel("Materia:");
         etq_materia.setFont( new Font("Arial", Font.PLAIN, 20) );
-		restriccion.gridy = 1;
-		restriccion.gridx = 0;
-		restriccion.gridheight = 1;
-		restriccion.gridwidth = 1;
-		restriccion.weighty = 1;
-		restriccion.weightx = 20;
-		restriccion.fill = GridBagConstraints.CENTER;
-		contDatosMateria.add( etq_materia, restriccion );
+		secondPanel.gridy = 0;
+		secondPanel.gridx = 0;
+		secondPanel.gridheight = 1;
+		secondPanel.gridwidth = 1;
+		secondPanel.weighty = 50;
+		secondPanel.weightx = 15;
+		secondPanel.fill = GridBagConstraints.CENTER;
+		contDatosMateria.add( etq_materia, secondPanel );
 
 		input_materia_campo = new JTextField();
-		input_materia_campo.setBorder( BorderFactory.createEmptyBorder(0, 0, 10, 0) );
-		restriccion.gridy = 1;
-		restriccion.gridx = 1;
-		restriccion.gridheight = 1;
-		restriccion.gridwidth = 1;
-		restriccion.weighty = 1;
-		restriccion.weightx = 30;
-		restriccion.fill = GridBagConstraints.HORIZONTAL;
-		contDatosMateria.add( input_materia_campo, restriccion );
+		input_materia_campo.setHorizontalAlignment(JTextField.CENTER);
+		secondPanel.gridy = 0;
+		secondPanel.gridx = 1;
+		secondPanel.gridheight = 1;
+		secondPanel.gridwidth = 1;
+		secondPanel.weighty = 50;
+		secondPanel.weightx = 35;
+		secondPanel.insets= new Insets(5,0,5,0);
+		secondPanel.fill = GridBagConstraints.BOTH;
+		contDatosMateria.add( input_materia_campo, secondPanel );
         
 
 		etq_credito_estudiante = new JLabel("Creditos:");
         etq_credito_estudiante.setFont( new Font("Arial", Font.PLAIN, 20) );
-        restriccion.gridy = 2;
-		restriccion.gridy = 1;
-		restriccion.gridx = 2;
-		restriccion.gridheight = 1;
-		restriccion.gridwidth = 1;
-		restriccion.weighty = 1;
-		restriccion.weightx = 20;
-		restriccion.fill = GridBagConstraints.CENTER;
-		contDatosMateria.add( etq_credito_estudiante, restriccion );
+        secondPanel.gridy = 0;
+		secondPanel.gridx = 2;
+		secondPanel.gridheight = 1;
+		secondPanel.gridwidth = 1;
+		secondPanel.weighty = 50;
+		secondPanel.weightx = 15;
+		secondPanel.fill = GridBagConstraints.CENTER;
+		contDatosMateria.add( etq_credito_estudiante, secondPanel );
 
 		input_credito_campo = new JTextField();
-		input_credito_campo.setBorder( BorderFactory.createEmptyBorder(0, 0, 10, 0) );
-		restriccion.gridy = 1;
-		restriccion.gridx = 3;
-		restriccion.gridheight = 1;
-		restriccion.gridwidth = 1;
-		restriccion.weighty = 1;
-		restriccion.weightx = 30;
-		restriccion.insets = new Insets(10, 0, 10, 0);
-		restriccion.fill = GridBagConstraints.HORIZONTAL;
-		contDatosMateria.add( input_credito_campo, restriccion );
-        restriccion.insets = new Insets(0, 0, 0, 0);
+		input_credito_campo.setHorizontalAlignment(JTextField.CENTER);
+		secondPanel.gridy = 0;
+		secondPanel.gridx = 3;
+		secondPanel.gridheight = 1;
+		secondPanel.gridwidth = 1;
+		secondPanel.weighty = 1;
+		secondPanel.weightx = 35;
+		secondPanel.insets= new Insets(5,0,5,10);
+		secondPanel.fill = GridBagConstraints.BOTH;
+		contDatosMateria.add( input_credito_campo, secondPanel );
+		
 
 		etq_nota_estudiante = new JLabel("Nota:");
         etq_nota_estudiante.setFont( new Font("Arial", Font.PLAIN, 20) );
-		restriccion.gridy = 2;
-		restriccion.gridx = 0;
-		restriccion.gridheight = 1;
-		restriccion.gridwidth = 1;
-		restriccion.weighty = 1;
-		restriccion.weightx = 20;
-		restriccion.fill = GridBagConstraints.CENTER;
-		contDatosMateria.add( etq_nota_estudiante, restriccion );
+		secondPanel.gridy = 1;
+		secondPanel.gridx = 0;
+		secondPanel.gridheight = 1;
+		secondPanel.gridwidth = 1;
+		secondPanel.weighty = 50;
+		secondPanel.weightx = 15;
+		secondPanel.fill = GridBagConstraints.CENTER;
+		contDatosMateria.add( etq_nota_estudiante, secondPanel );
 
 
 		input_nota_campo = new JTextField();
-		input_nota_campo.setBorder( BorderFactory.createEmptyBorder(0, 0, 10, 0) );
-		restriccion.gridy = 2;
-		restriccion.gridx = 1;
-		restriccion.gridheight = 1;
-		restriccion.gridwidth = 1;
-		restriccion.weighty = 1;
-		restriccion.weightx = 30;
-		restriccion.insets = new Insets(0, 0, 0, 0);
-		restriccion.fill = GridBagConstraints.HORIZONTAL;
-		contDatosMateria.add( input_nota_campo, restriccion );
-        restriccion.insets = new Insets(0, 0, 0, 0);
+		input_nota_campo.setHorizontalAlignment(JTextField.CENTER);
+		secondPanel.gridy = 1;
+		secondPanel.gridx = 1;
+		secondPanel.gridheight = 1;
+		secondPanel.gridwidth = 1;
+		secondPanel.weighty = 50;
+		secondPanel.weightx = 35;
+		secondPanel.insets= new Insets(5,0,5,0);
+		secondPanel.fill = GridBagConstraints.BOTH;
+		contDatosMateria.add( input_nota_campo, secondPanel );
 
 	
 		btn_registrar_notaMateria = new JButton("REGISTRAR");
         btn_registrar_notaMateria.setBackground(new Color(0,0,245));
         btn_registrar_notaMateria.setForeground(Color.WHITE);
 		btn_registrar_notaMateria.setFocusable(false);
-		restriccion.gridy = 2;
-		restriccion.gridx = 2;
-		restriccion.gridheight = 1;
-		restriccion.gridwidth = 2;
-		restriccion.weighty = 1;
-		restriccion.weightx = 40; 
-		restriccion.fill = GridBagConstraints.CENTER;
-		contDatosMateria.add( btn_registrar_notaMateria, restriccion );
+		btn_registrar_notaMateria.setBorder(BorderFactory.createEmptyBorder(0,30,0,30));
+		secondPanel.gridy = 1;
+		secondPanel.gridx = 2;
+		secondPanel.gridheight = 1;
+		secondPanel.gridwidth = 2;
+		secondPanel.weighty = 50;
+		secondPanel.weightx = 35; 
+		secondPanel.fill = GridBagConstraints.VERTICAL;
+		contDatosMateria.add( btn_registrar_notaMateria, secondPanel );
 
 		etq_resumen = new JLabel("RESUMEN");
         etq_resumen.setFont( new Font("Arial", Font.BOLD, 20) );
-		restriccion.gridy = 3;
-		restriccion.gridx = 0;
-		restriccion.gridheight = 2;
-		restriccion.gridwidth = 4;
-		restriccion.weighty = 1;
-		restriccion.weightx = 100;
-		restriccion.insets = new Insets(10, 0, 10, 0);
-		restriccion.fill = GridBagConstraints.CENTER;
-		contPrincipal.add( etq_resumen, restriccion );
+		mainLayout.gridy = 3;
+		mainLayout.gridx = 0;
+		mainLayout.gridheight = 2;
+		mainLayout.gridwidth = 4;
+		mainLayout.weighty = 2;
+		mainLayout.weightx = 100;
+		mainLayout.insets = new Insets(10, 0, 10, 0);
+		mainLayout.fill = GridBagConstraints.CENTER;
+		contPrincipal.add( etq_resumen, mainLayout );
 
         Border borderGray = BorderFactory.createMatteBorder(2, 2, 1, 1, Color.decode("#D5D5D5"));
 
@@ -187,15 +190,15 @@ public class Calculadora extends JFrame{
         JScrollPane scrollPane = new JScrollPane(contenedorItems);
         scrollPane.setBorder(borderGray);
         
-        restriccion.gridy = 5;
-        restriccion.gridx = 0;
-        restriccion.gridheight = 1;
-        restriccion.gridwidth = 4;
-        restriccion.weighty = 83;
-        restriccion.weightx = 100;
-        restriccion.fill = GridBagConstraints.BOTH;
-        restriccion.insets = new Insets(10, 0, 0, 10);
-        contPrincipal.add( scrollPane, restriccion );
+        mainLayout.gridy = 5;
+        mainLayout.gridx = 0;
+        mainLayout.gridheight = 1;
+        mainLayout.gridwidth = 4;
+        mainLayout.weighty = 80;
+        mainLayout.weightx = 100;
+        mainLayout.fill = GridBagConstraints.BOTH;
+        mainLayout.insets = new Insets(10, 0, 0, 10);
+        contPrincipal.add( scrollPane, mainLayout );
                 
         Border borderColor = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.decode("#D5D5D5"));
         Border borderPadding = new EmptyBorder(3,10,3,10);
@@ -203,7 +206,7 @@ public class Calculadora extends JFrame{
 
     
 
-    GridBagConstraints constItems = new GridBagConstraints();
+    	GridBagConstraints constItems = new GridBagConstraints();
         
         for (int i=0; i<this.listaJLabels.length; i++) {
             JLabel etq_temporal = new JLabel(" ");
@@ -225,34 +228,35 @@ public class Calculadora extends JFrame{
             contenedorItems.add(this.listaJLabels[i], constItems);
         }
 
-        etq_total = new JLabel("Total: 0.0");
+        etq_total = new JLabel("Promedio: 0.0");
         etq_total.setHorizontalAlignment( JLabel.CENTER );
         etq_total.setFont( new Font("Arial", Font.BOLD, 25) );
         etq_total.setOpaque(true);
         etq_total.setBackground( Color.white );
         etq_total.setBorder( BorderFactory.createEmptyBorder(5, 10, 5, 10) );
-        restriccion.gridy = 6;
-        restriccion.gridx = 0;
-        restriccion.gridheight = 1;
-        restriccion.gridwidth = 4;
-        restriccion.weighty = 1;
-        restriccion.weightx = 100;
-        restriccion.fill = GridBagConstraints.BOTH;
-        restriccion.insets = new Insets(0, 0, 0, 10);
-        contPrincipal.add( etq_total, restriccion );
+        mainLayout.gridy = 6;
+        mainLayout.gridx = 0;
+        mainLayout.gridheight = 1;
+        mainLayout.gridwidth = 4;
+        mainLayout.weighty = 2;
+        mainLayout.weightx = 100;
+        mainLayout.fill = GridBagConstraints.BOTH;
+        mainLayout.insets = new Insets(0, 0, 0, 10);
+        contPrincipal.add( etq_total, mainLayout );
 
         btn_limpiar = new JButton("LIMPIAR");
         btn_limpiar.setBackground(Color.RED);
         btn_limpiar.setForeground(Color.WHITE);
 		btn_limpiar.setFocusable(false);
-		restriccion.gridy =7;
-		restriccion.gridx = 0;
-		restriccion.gridheight = 1;
-		restriccion.gridwidth = 4;
-		restriccion.weighty = 1;
-		restriccion.weightx = 25;
-		restriccion.fill = GridBagConstraints.CENTER;
-		contPrincipal.add( btn_limpiar, restriccion );
+		btn_limpiar.setBorder(BorderFactory.createEmptyBorder(10,30,10,30));
+		mainLayout.gridy =7;
+		mainLayout.gridx = 0;
+		mainLayout.gridheight = 1;
+		mainLayout.gridwidth = 4;
+		mainLayout.weighty = 2;
+		mainLayout.weightx = 25;
+		mainLayout.fill = GridBagConstraints.VERTICAL;
+		contPrincipal.add( btn_limpiar, mainLayout );
 
 
 		add( contPrincipal );
@@ -279,9 +283,41 @@ public class Calculadora extends JFrame{
 			}
 		};
 
-		btn_limpiar.addActionListener(evento_click_limpiar);	
-		
+		btn_limpiar.addActionListener(evento_click_limpiar);
+
+		KeyListener evento_key_inputs = new KeyListener(){
+			public void keyPressed(KeyEvent e){
+
+			}
+
+			public void keyReleased(KeyEvent e){
+			
+				if(e.getKeyCode() == 10){
+					pasarCampo();
+				}
+			}
+
+			public void keyTyped(KeyEvent e){
+
+			}
+		};
+
+		input_materia_campo.addKeyListener(evento_key_inputs);
+		input_credito_campo.addKeyListener(evento_key_inputs);
+		input_nota_campo.addKeyListener(evento_key_inputs);	
 	}
+
+	public void pasarCampo(){
+		if(input_credito_campo.getText().equals("")){
+			input_credito_campo.requestFocus();
+			
+		}else if(input_nota_campo.getText().equals("")){
+			input_nota_campo.requestFocus();
+		}else{
+			input_materia_campo.requestFocus();
+		}	
+	}
+
 
     public void registrarMateria(String subject,double credits,double grade){
 
@@ -309,7 +345,7 @@ public class Calculadora extends JFrame{
         }
 
         double promedio = notas / creditos;
-        etq_total.setText("Total: " + promedio);
+        etq_total.setText("Promedio: " + promedio);
     }
 
     public void limpiar(){
