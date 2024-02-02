@@ -1,9 +1,10 @@
-package apppromedioponderado;
+ package apppromedioponderado;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -128,9 +129,9 @@ public class Vista extends javax.swing.JFrame {
             .addGroup(contenedor_inputsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(contenedor_inputsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contenedor_inputsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(etq_materia)
-                        .addComponent(etq_creditos))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, contenedor_inputsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(etq_creditos, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(etq_materia))
                     .addComponent(campo_materia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                     .addComponent(campo_creditos))
                 .addGap(18, 18, 18)
@@ -176,7 +177,7 @@ public class Vista extends javax.swing.JFrame {
         );
         contenedor_itemsLayout.setVerticalGroup(
             contenedor_itemsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 205, Short.MAX_VALUE)
+            .addGap(0, 249, Short.MAX_VALUE)
         );
 
         contenedor_resgistro.setViewportView(contenedor_items);
@@ -217,11 +218,11 @@ public class Vista extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(etq_resumen, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(contenedor_resgistro, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(contenedor_resgistro, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(etq_promedio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_limpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_limpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -246,11 +247,11 @@ public class Vista extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     public void initAlternComponent(){
-        contenedor_items.setLayout( new GridBagLayout() );
-        contenedor_items.setBackground(Color.WHITE);
+        contenedor_items.setLayout( new GridLayout(0,1) );
+        //contenedor_items.setBackground(Color.WHITE);
        
-        Border borderColor = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.decode("#D5D5D5"));
-        Border borderPadding = new EmptyBorder(6,10,6,10);
+        Border borderColor = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.decode("#D5D5D5"));
+        Border borderPadding = new EmptyBorder(3,10,3,10);
         Border borderGris = new CompoundBorder(borderColor, borderPadding);
         
         GridBagConstraints constItems = new GridBagConstraints();
@@ -277,8 +278,8 @@ public class Vista extends javax.swing.JFrame {
        
        setVisible(true);
        setLocationRelativeTo(null);
-       revalidate();
-       repaint();
+       //revalidate();
+       //repaint();
     }
     
     private void btn_limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_limpiarActionPerformed
@@ -299,7 +300,7 @@ public class Vista extends javax.swing.JFrame {
         
              
         
-        for(int i=0; i < this.clases.length; i++){
+        /*for(int i=0; i < this.clases.length; i++){
             if(clases[i] == null){
                 clases[i] = new Materia(subject, credit, grade);
                 notas += clases[i].getNota() * clases[i].getCredito();
@@ -316,8 +317,14 @@ public class Vista extends javax.swing.JFrame {
 
             }     
         }      
-        
+        */
+        notas=notas + (grade*credit);
+        creditos = notas + credit;   
         String promedio = "Promedio: " + notas/creditos;
+        
+        String text = subject + " -> Creditos: " + credit +" -> Nota: " + grade;
+        labelsList[indiceItems].setText(text);
+        indiceItems++;
         
         etq_promedio.setText(promedio);
         campo_materia.setText("");
