@@ -2,19 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="df7e46ad-3dea-45c4-88a2-5836c8f1652c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/14_SimuladorPrestamo/Prestamos$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/14_SimuladorPrestamo/Prestamos$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/14_SimuladorPrestamo/Prestamos$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/14_SimuladorPrestamo/Prestamos$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/14_SimuladorPrestamo/Prestamos.class" beforeDir="false" afterPath="$PROJECT_DIR$/14_SimuladorPrestamo/Prestamos.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/14_SimuladorPrestamo/Principal.class" beforeDir="false" afterPath="$PROJECT_DIR$/14_SimuladorPrestamo/Principal.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/15 - POO - Facturador/Principal.class" beforeDir="false" afterPath="$PROJECT_DIR$/15 - POO - Facturador/Principal.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/15 - POO - Facturador/Principal.java" beforeDir="false" afterPath="$PROJECT_DIR$/15 - POO - Facturador/Principal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/build.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/build/classes/.netbeans_automatic_build" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/build/classes/.netbeans_update_resources" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/build/classes/apppromedioponderado/Materia.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/build/classes/apppromedioponderado/Principal.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/build/classes/apppromedioponderado/Vista$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/build/classes/apppromedioponderado/Vista$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/build/classes/apppromedioponderado/Vista.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/build/classes/apppromedioponderado/Vista.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/manifest.mf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/nbproject/build-impl.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/nbproject/genfiles.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/nbproject/private/private.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/nbproject/private/private.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/nbproject/project.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/nbproject/project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/src/apppromedioponderado/Materia.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/src/apppromedioponderado/Principal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/src/apppromedioponderado/Vista.form" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/19_AppPromedioPonderado/src/apppromedioponderado/Vista.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Calculadora$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Calculadora$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Calculadora$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Calculadora$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Calculadora$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Calculadora$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Calculadora$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Calculadora.class" beforeDir="false" afterPath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Calculadora.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Integrantes.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Materia.class" beforeDir="false" afterPath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Materia.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Principal.class" beforeDir="false" afterPath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Principal.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Calculadora.java" beforeDir="false" afterPath="$PROJECT_DIR$/17_Quiz_PromedioPonderado/Calculadora.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/18_AppRegistro/nbproject/private/private.properties" beforeDir="false" afterPath="$PROJECT_DIR$/18_AppRegistro/nbproject/private/private.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/18_AppRegistro/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/18_AppRegistro/nbproject/private/private.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,14 +43,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -46,6 +60,7 @@
       <option name="presentableId" value="Default" />
       <updated>1704341639096</updated>
       <workItem from="1704341640122" duration="7000" />
+      <workItem from="1706832926788" duration="12000" />
     </task>
     <servers />
   </component>

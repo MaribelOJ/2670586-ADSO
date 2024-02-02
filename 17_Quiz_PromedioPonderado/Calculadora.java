@@ -314,8 +314,13 @@ public class Calculadora extends JFrame{
 		}else if(input_nota_campo.getText().equals("")){
 			input_nota_campo.requestFocus();
 		}else{
-			input_materia_campo.requestFocus();
-		}	
+			String materia = input_materia_campo.getText();
+               double creditos = Double.parseDouble(input_credito_campo.getText());
+            double notas = Double.parseDouble(input_nota_campo.getText());
+
+			registrarMateria(materia, creditos, notas);
+
+		}
 	}
 
 
@@ -346,16 +351,15 @@ public class Calculadora extends JFrame{
 
         double promedio = notas / creditos;
         etq_total.setText("Promedio: " + promedio);
+		input_materia_campo.requestFocus();
     }
 
     public void limpiar(){
 
         for (int i=0; i<this.listaJLabels.length; i++) {
             if(materias[i] != null){
-                
                 this.listaJLabels[i].setText(" ");
                 etq_total.setText("");
-
             }     
         }
 
