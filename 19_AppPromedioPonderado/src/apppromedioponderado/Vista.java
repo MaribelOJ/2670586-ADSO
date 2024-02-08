@@ -17,12 +17,11 @@ public class Vista extends javax.swing.JFrame {
     private JLabel labelsList [];
     private float notas;
     private float creditos;
-    private int indiceItems;
             
     public Vista() {
         this.clases = new Materia[50];
         this.labelsList = new JLabel[50];
-        this.indiceItems=0;
+
         initComponents();
         initAlternComponent();
     }
@@ -257,7 +256,7 @@ public class Vista extends javax.swing.JFrame {
         GridBagConstraints constItems = new GridBagConstraints();
        
        for (int i=0; i<this.labelsList.length; i++) {
-            JLabel etq_registro = new JLabel("");
+            JLabel etq_registro = new JLabel(" ");
             etq_registro.setHorizontalAlignment( JLabel.CENTER );
             etq_registro.setFont( new Font("Arial", Font.PLAIN, 18) );
             etq_registro.setOpaque(true);
@@ -300,12 +299,11 @@ public class Vista extends javax.swing.JFrame {
         
              
         
-        /*for(int i=0; i < this.clases.length; i++){
+        for(int i=0; i < this.clases.length; i++){
             if(clases[i] == null){
                 clases[i] = new Materia(subject, credit, grade);
                 notas += clases[i].getNota() * clases[i].getCredito();
                 creditos += clases[i].getCredito();
-                indiceItems++;
                 break;
             }
         }
@@ -317,15 +315,9 @@ public class Vista extends javax.swing.JFrame {
 
             }     
         }      
-        */
-        notas=notas + (grade*credit);
-        creditos = notas + credit;   
-        String promedio = "Promedio: " + notas/creditos;
         
-        String text = subject + " -> Creditos: " + credit +" -> Nota: " + grade;
-        labelsList[indiceItems].setText(text);
-        indiceItems++;
         
+        String promedio = "Promedio: " + notas/creditos;       
         etq_promedio.setText(promedio);
         campo_materia.setText("");
         campo_creditos.setText("");
