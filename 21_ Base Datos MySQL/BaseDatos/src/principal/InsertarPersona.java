@@ -74,10 +74,7 @@ public class InsertarPersona extends javax.swing.JFrame {
             Object dato[] = new Object[]{ doc, names, lastNames, address, phone, email };
             modelo.addRow(dato);
         }
-        
-        
-        
-        
+           
     }
     
     @SuppressWarnings("unchecked")
