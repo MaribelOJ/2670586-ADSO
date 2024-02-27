@@ -39,7 +39,7 @@ public class PanelEliminar extends javax.swing.JPanel {
         tablaDatos.getTableHeader().setBackground(Color.BLACK);
         tablaDatos.getTableHeader().setForeground(Color.WHITE);
         tablaDatos.setBackground(new Color(204,204,204));
-        tablaDatos.setRowHeight(25);
+        tablaDatos.setRowHeight(30);
         
         
         
@@ -55,7 +55,7 @@ public class PanelEliminar extends javax.swing.JPanel {
         tablaDatos.getColumnModel().getColumn(3).setPreferredWidth(50);
         tablaDatos.getColumnModel().getColumn(4).setPreferredWidth(150);
         tablaDatos.getColumnModel().getColumn(5).setPreferredWidth(150);
-        tablaDatos.getColumnModel().getColumn(6).setPreferredWidth(20);
+        tablaDatos.getColumnModel().getColumn(6).setPreferredWidth(40);
         
         
         tablaDatos.getTableHeader().setReorderingAllowed(false);

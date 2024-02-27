@@ -214,7 +214,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         //crear contenedor nuevo
-        PanelEditar nuevo = new PanelEditar();
+        PanelEditar nuevo = new PanelEditar(bd);
         
         //Ajustar el tamaño del contenedor nuevo
         nuevo.setPreferredSize(contentPrincipal.getPreferredSize());
