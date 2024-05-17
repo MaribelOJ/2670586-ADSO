@@ -116,10 +116,10 @@ function insertarPersona(){
         .then( res => res.json())
         .then( data => {
 
-            if(data.status == true){
-                table_body.innerHTML = "";
-                cargarPersonas();
-            }
+            table_body.innerHTML = "";
+            limpiarCampos();
+            cargarPersonas();
+
         });
     }
 }
@@ -186,7 +186,6 @@ function editarPersona(cc){
         }
 
     });
-
 }
 
 function actualizarPersona(cc){
