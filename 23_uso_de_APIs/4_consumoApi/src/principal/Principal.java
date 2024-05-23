@@ -11,12 +11,14 @@ public class Principal {
 
     
     public static void main(String[] args) {
-        //iNSTANCIA PARA REALIZAR CONSUMOS
-//        ConsumoAPI  consumo = new ConsumoAPI();
-//        
-//        // Endpoint Obtener
-//        String respuesta01 = consumo.consumoGET("https://codetesthub.com/API/Obtener.php");
-//        System.out.println("Respuesta Obtener: "+ respuesta01);
+        //INSTANCIA PARA REALIZAR CONSUMOS
+        ConsumoAPI  consumo = new ConsumoAPI();
+        
+        // Endpoint Obtener
+        String respuesta01 = consumo.consumoGET("https://codetesthub.com/API/Obtener.php");
+        String respuestaObtener = consumo.consumoGET("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png");
+        System.out.println("Respuesta Obtener: "+ respuesta01);
+        System.out.println("Respuesta Obtener: "+ respuestaObtener);
 //        
 //        //Endpoint Insertar
 //        Map<String, String> datosInsertar = new HashMap<>();
@@ -56,7 +58,7 @@ public class Principal {
 //            System.out.println(name);
 //        }
         
-        Interfaz display = new Interfaz();
+        //Interfaz display = new Interfaz();
     }
     
 }
