@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 import util.ConsumoAPI;
+import util.Pokemon;
 
 
 public class Pokedex extends javax.swing.JFrame {
@@ -26,9 +27,11 @@ public class Pokedex extends javax.swing.JFrame {
     String url_next;
     String url_previous;
     JButton [] lista_botones;
+    Pokemon [] lista_pokemones;
     DefaultTableModel modelo;
     JsonArray pokemones;
     int posicion;
+    
     public Pokedex() {
         this.consumo = new ConsumoAPI();
         this.first_url = "https://pokeapi.co/api/v2/pokemon";
@@ -37,6 +40,7 @@ public class Pokedex extends javax.swing.JFrame {
         this.lista_botones = new JButton[20];
         this.pokemones=new JsonArray();
         this.posicion = -1;
+        this.lista_pokemones = new Pokemon[1302];
         initComponents();
         initAlternComponents();
         listarPokemones(first_url);
@@ -192,20 +196,7 @@ public class Pokedex extends javax.swing.JFrame {
 
     private void btn_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nextActionPerformed
         posicion++;
-        
-        JsonObject objeto_respuesta = pokemones.get(posicion).getAsJsonObject();
-        String name = objeto_respuesta.get("name").getAsString();
-        String rutaPokemon = objeto_respuesta.get("url").getAsString();
-
-        //Se obtiene la imagen del pokemon
-        String respuesta02 = consumo.consumoGET(rutaPokemon);
-        JsonObject objetoPokemon = JsonParser.parseString(respuesta02).getAsJsonObject();
-        JsonObject sprites = objetoPokemon.get("sprites").getAsJsonObject();
-        JsonObject other = sprites.get("other").getAsJsonObject();
-        JsonObject home = other.get("home").getAsJsonObject();
-        String url_img = home.get("front_default").getAsString();
-        
-        mostrarPokemon(name,url_img,posicion);
+        mostrarPokemon(posicion);
         btn_rewind.setEnabled(true);
     }//GEN-LAST:event_btn_nextActionPerformed
     
@@ -264,44 +255,34 @@ public class Pokedex extends javax.swing.JFrame {
             //Se obtiene la imagen del pokemon
             String respuesta02 = consumo.consumoGET(rutaPokemon);
             JsonObject objetoPokemon = JsonParser.parseString(respuesta02).getAsJsonObject();
+            
+            JsonArray abilities = objetoPokemon.get("abilities").getAsJsonArray();
+            
+            String [] habilidades = new String[abilities.size()];
+            String [] links = new String[abilities.size()];
+            
+            for(int j=0; j < abilities.size();j++){
+                JsonObject ability1 = abilities.get(j).getAsJsonObject();
+                JsonObject datos = ability1.get("ability").getAsJsonObject();
+                String nombre = datos.get("name").getAsString();
+                String link = datos.get("url").getAsString();
+                habilidades[j] = nombre;
+                links[j]= link;
+            }
+         
+            
             JsonObject sprites = objetoPokemon.get("sprites").getAsJsonObject();
             JsonObject other = sprites.get("other").getAsJsonObject();
             JsonObject home = other.get("home").getAsJsonObject();
             String url_img = home.get("front_default").getAsString();
-              
             
             JButton btnPokemon = new JButton(name);
-            final int indice = i;
             //btnPokemon.setBackground(Color.decode("#663300"));
-            btnPokemon.addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    mostrarPokemon(name,url_img,indice);
-                }
-            });
-                
-                
-            lista_botones[i]=btnPokemon;
-                         
-        }
-
-        cont_scroll.setLayout(new GridLayout(20,1));
-        //cont_scroll.setBackground(Color.WHITE);
-        for (JButton lista_boton : lista_botones) {
-            cont_scroll.add(lista_boton);
-        }
-        
-        revalidate();
-        repaint();
-        
-    }
-    
-    public void mostrarPokemon(String nombre,String url,int i){
-
-        try {
+            
+            
+            try {
                 // Crear un objeto URL
-                URL ruta_img = new URL(url);
+                URL ruta_img = new URL(url_img);
 
                 // Leer la imagen de la URL
                 BufferedImage image = ImageIO.read(ruta_img);
@@ -316,16 +297,67 @@ public class Pokedex extends javax.swing.JFrame {
                 // Crear un ImageIcon a partir del BufferedImage
                 ImageIcon imagenTemporal = new ImageIcon(bufferedImage);
                 Image imagen = imagenTemporal.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
-                imagenTemporal= new ImageIcon(imagen);
-                posicion=i;
-                etq_nombre.setText(nombre.toUpperCase());
-                etq_img.setIcon(imagenTemporal);
                 
-        }catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error al descargar la imagen.");
+                
+                for(int a=0;a < lista_pokemones.length; a++){
+                
+                    if(lista_pokemones[a] == null){
+                        lista_pokemones[a]= new Pokemon(name, imagen, habilidades, links);
+                        final int indice = a;
+                        
+                        btnPokemon.addActionListener(new ActionListener() {
+
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                            mostrarPokemon(indice);
+                            }
+                        });
+                        break;
+                    }
+                
+                }
+                lista_botones[i]=btnPokemon;
+                      
+            }catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Error al descargar la imagen.");
+            } 
+                
+        }
+
+        cont_scroll.setLayout(new GridLayout(20,1));
+        //cont_scroll.setBackground(Color.WHITE);
+        for (JButton lista_boton : lista_botones) {
+            cont_scroll.add(lista_boton);
         }
         
+                                  
+        revalidate();
+        repaint();
+        
+    }
+    
+    public void datosPokemon(){
+        
+    }
+    
+    public void mostrarPokemon(int indice){
+        Image foto = lista_pokemones[indice].getImg();  
+        etq_nombre.setText(lista_pokemones[indice].getNombre().toUpperCase());
+        etq_img.setIcon(new ImageIcon(foto));
+        
+
+        
+        modelo.setRowCount(0);
+        String [] abilities = lista_pokemones[indice].getHabilidades();
+        String [] rutas = lista_pokemones[indice].getUrl_habilidad();
+        
+        for(int i=1; i<=abilities.length;i++){
+            Object dato[] = new Object[]{i,abilities[i-1],rutas[i-1]};
+            modelo.addRow(dato);
+        }
+                
+        posicion=indice;
         revalidate();
         repaint();
     

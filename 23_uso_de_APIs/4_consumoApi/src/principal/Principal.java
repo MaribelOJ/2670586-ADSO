@@ -15,10 +15,8 @@ public class Principal {
         ConsumoAPI  consumo = new ConsumoAPI();
         
         // Endpoint Obtener
-        String respuesta01 = consumo.consumoGET("https://codetesthub.com/API/Obtener.php");
-        String respuestaObtener = consumo.consumoGET("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png");
-        System.out.println("Respuesta Obtener: "+ respuesta01);
-        System.out.println("Respuesta Obtener: "+ respuestaObtener);
+//        String respuesta01 = consumo.consumoGET("https://codetesthub.com/API/Obtener.php");
+//        System.out.println("Respuesta Obtener: "+ respuesta01);
 //        
 //        //Endpoint Insertar
 //        Map<String, String> datosInsertar = new HashMap<>();
@@ -58,7 +56,7 @@ public class Principal {
 //            System.out.println(name);
 //        }
         
-        //Interfaz display = new Interfaz();
+        Interfaz display = new Interfaz();
     }
     
 }
