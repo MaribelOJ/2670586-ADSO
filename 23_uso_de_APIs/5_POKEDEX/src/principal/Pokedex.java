@@ -16,6 +16,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import util.ConsumoAPI;
 import util.Pokemon;
@@ -23,28 +24,39 @@ import util.Pokemon;
 
 public class Pokedex extends javax.swing.JFrame {
     ConsumoAPI consumo;
-    String first_url;
+    String url;
     String url_next;
     String url_previous;
     JButton [] lista_botones;
+    JButton [] paginas;
     Pokemon [] lista_pokemones;
+    String [] lista_rutas;
     DefaultTableModel modelo;
     JsonArray pokemones;
     int posicion;
     int num_foto;
+    int boton;
+    int start;
+    int end;
     
     public Pokedex() {
         this.consumo = new ConsumoAPI();
-        this.first_url = "https://pokeapi.co/api/v2/pokemon";
+        this.url = "https://pokeapi.co/api/v2/pokemon";
         this.url_next="";
         this.url_previous="";
         this.lista_botones = new JButton[20];
+        this.paginas = new JButton[11];
+        this.lista_rutas = new String[65];
+        this.boton=2;
+        this.start = 1;
+        this.end = 7;
         this.pokemones=new JsonArray();
         this.posicion = -1;
         this.num_foto = 0;
         this.lista_pokemones = new Pokemon[1302];
         initComponents();
-        listarPokemones(first_url);
+        listarPokemones(url);
+        cargarPaginador();
         initAlternComponents();
         
     }
@@ -60,11 +72,11 @@ public class Pokedex extends javax.swing.JFrame {
         cont_scroll = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaDatos = new javax.swing.JTable();
-        cont_botones = new javax.swing.JPanel();
         etq_nombre = new javax.swing.JLabel();
         etq_img = new javax.swing.JLabel();
         btn_rewind = new javax.swing.JButton();
         btn_next = new javax.swing.JButton();
+        cont_botones = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,6 +86,8 @@ public class Pokedex extends javax.swing.JFrame {
         etq_titulo.setForeground(new java.awt.Color(255, 0, 51));
         etq_titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         etq_titulo.setText("POKEDEX");
+
+        cont_scroll.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout cont_scrollLayout = new javax.swing.GroupLayout(cont_scroll);
         cont_scroll.setLayout(cont_scrollLayout);
@@ -97,17 +111,6 @@ public class Pokedex extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tablaDatos);
-
-        javax.swing.GroupLayout cont_botonesLayout = new javax.swing.GroupLayout(cont_botones);
-        cont_botones.setLayout(cont_botonesLayout);
-        cont_botonesLayout.setHorizontalGroup(
-            cont_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        cont_botonesLayout.setVerticalGroup(
-            cont_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 47, Short.MAX_VALUE)
-        );
 
         etq_nombre.setFont(new java.awt.Font("Arial", 1, 20)); // NOI18N
         etq_nombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -136,28 +139,23 @@ public class Pokedex extends javax.swing.JFrame {
             .addGroup(cont_principalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(cont_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(etq_titulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(etq_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(cont_principalLayout.createSequentialGroup()
-                        .addGroup(cont_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cont_botones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(cont_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(cont_principalLayout.createSequentialGroup()
-                                .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btn_rewind, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addGroup(cont_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(etq_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(cont_principalLayout.createSequentialGroup()
-                                        .addGap(112, 112, 112)
-                                        .addComponent(etq_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(cont_principalLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                                        .addGroup(cont_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(cont_principalLayout.createSequentialGroup()
-                                                .addComponent(btn_rewind, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(etq_img, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(btn_next, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addGap(0, 18, Short.MAX_VALUE)))
-                        .addContainerGap())))
+                                        .addComponent(etq_img, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btn_next))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(0, 19, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         cont_principalLayout.setVerticalGroup(
             cont_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,33 +168,50 @@ public class Pokedex extends javax.swing.JFrame {
                         .addComponent(etq_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(cont_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(cont_principalLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(cont_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btn_rewind, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btn_next, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(106, 106, 106))
+                                .addGap(71, 71, 71)
+                                .addComponent(btn_rewind, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(cont_principalLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(etq_img, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))
-                    .addGroup(cont_principalLayout.createSequentialGroup()
-                        .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addComponent(cont_botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(etq_img, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(cont_principalLayout.createSequentialGroup()
+                                .addGap(77, 77, 77)
+                                .addComponent(btn_next, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(17, 17, 17)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(scroll, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        cont_botones.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout cont_botonesLayout = new javax.swing.GroupLayout(cont_botones);
+        cont_botones.setLayout(cont_botonesLayout);
+        cont_botonesLayout.setHorizontalGroup(
+            cont_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 532, Short.MAX_VALUE)
+        );
+        cont_botonesLayout.setVerticalGroup(
+            cont_botonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 35, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cont_principal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(cont_principal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cont_botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(70, 70, 70))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(cont_principal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(cont_principal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cont_botones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
@@ -241,33 +256,165 @@ public class Pokedex extends javax.swing.JFrame {
 
         
         modelo = (DefaultTableModel) tablaDatos.getModel();
-        tablaDatos.getColumnModel().getColumn(0).setPreferredWidth(10);
-        tablaDatos.getColumnModel().getColumn(1).setPreferredWidth(60);
-        tablaDatos.getColumnModel().getColumn(2).setPreferredWidth(200);
-        
+        tablaDatos.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tablaDatos.getColumnModel().getColumn(1).setPreferredWidth(10);
+        tablaDatos.getColumnModel().getColumn(2).setPreferredWidth(100);
+           
+ 
         btn_rewind.setEnabled(false);
-        
-
         etq_nombre.setText(lista_pokemones[0].getNombre());
-        
+
+        for(int i=0; i<lista_rutas.length;i++){
+            String respuesta01 = consumo.consumoGET(url);
+            JsonObject objeto = JsonParser.parseString(respuesta01).getAsJsonObject();
+            if(!objeto.get("next").isJsonNull()){
+                lista_rutas[i]=url;
+                String link = objeto.get("next").getAsString();
+                url=link;
+            }
+        }
+        System.out.println(lista_rutas[64]);
         mostrarPokemon(0,0);
         
         setVisible(true);
+        setSize(700, 660);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
         revalidate();
         repaint();
         
     }
     
+    public void cargarPaginador(){
+        
+        
+        JButton btn_first= new JButton("<<");
+        JButton btn_previous = new JButton("<");
+
+                  
+        paginas[0]=btn_first;
+        paginas[1]=btn_previous;
+        if(url_previous == null){
+            paginas[1].setEnabled(false);
+        }
+        if(url_next== null){
+            paginas[9].setEnabled(false);
+        }
+
+        
+        int num=1;
+        for(int i=start;i<=end;i++){
+            JButton paginador = new JButton();
+            if(i < 10){
+                paginador.setText("0"+i);
+            }else{
+                paginador.setText(""+i);
+            }
+            num++;
+            paginas[num]=paginador;
+        }
+        
+        JButton btn_last= new JButton(">>");
+        JButton btn_after = new JButton(">");
+        
+        paginas[9]=btn_after;
+        paginas[10]=btn_last;
+        
+        cont_botones.removeAll();
+        cont_botones.setLayout(new GridLayout(1,11));
+        
+        for(int j=0; j < paginas.length;j++){
+            paginas[j].setBackground(Color.white);
+            final int num_boton = j;
+            paginas[j].addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                   pagesHandler(num_boton);
+                }
+            });
+
+            cont_botones.add(paginas[j]);
+   
+        }
+        paginas[boton].setBackground(Color.blue);
+        revalidate();
+        repaint();    
+        
+    }
+    
+    public void pagesHandler(int num_boton){
+        System.out.println(num_boton);
+        if(num_boton == 0){
+            listarPokemones(lista_rutas[0]);
+            start=1;
+            end=7;
+        }
+            
+        if(num_boton == 10){
+            listarPokemones(lista_rutas[64]);
+            start=59;
+            end=65;
+        }
+        
+        if(num_boton == 9){
+            paginas[1].setEnabled(true);
+            paginas[boton].setBackground(Color.white);
+            boton++;
+
+            listarPokemones(url_next);
+            
+            if(boton>5){
+                start++;
+                end++;
+                boton--;
+            }    
+        }
+        
+        if(num_boton == 1){
+            paginas[9].setEnabled(true);
+            paginas[boton].setBackground(Color.white);
+            if(boton==5){
+                start--;
+                end--;
+                boton--;
+            }
+
+            listarPokemones(url_previous);
+                 
+        }else{
+            paginas[boton].setBackground(Color.white);
+            
+            if(num_boton <= 5){
+                boton = num_boton;
+            }
+            
+        }
+        
+        cargarPaginador();
+        revalidate();
+        repaint(); 
+    }
+    
     public void listarPokemones(String url){
+        
         String respuesta01 = consumo.consumoGET(url);
         JsonObject objeto = JsonParser.parseString(respuesta01).getAsJsonObject();
         
         if(!objeto.get("next").isJsonNull()){
             url_next = objeto.get("next").getAsString();
+        }else{
+            url_next=null;
+            url_previous = "https://pokeapi.co/api/v2/pokemon?offset=1280&limit=20";
         }
         
         if(!objeto.get("previous").isJsonNull()){
-            url_previous = objeto.get("previous").getAsString();
+            if(url_next != null){
+                url_previous = objeto.get("previous").getAsString();
+            }
+        }else{
+            url_previous=null;
         }
        
         pokemones = objeto.get("results").getAsJsonArray();
@@ -310,7 +457,7 @@ public class Pokedex extends javax.swing.JFrame {
             String url_img = home.get("front_default").getAsString();
             
             JButton btnPokemon = new JButton(name);
-            //btnPokemon.setBackground(Color.decode("#663300"));
+            btnPokemon.setBackground(Color.white);
             
             
             try {
@@ -329,7 +476,7 @@ public class Pokedex extends javax.swing.JFrame {
                 BufferedImage image5 = ImageIO.read(ruta_ftS);
 
 //              // Escalar las imágenes
-                Image scaledImage = image.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+                Image scaledImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
                 Image scaledImage2 = image2.getScaledInstance(400, 400, Image.SCALE_SMOOTH);
                 Image scaledImage3 = image3.getScaledInstance(400, 400, Image.SCALE_SMOOTH);
                 Image scaledImage4 = image4.getScaledInstance(400, 400, Image.SCALE_SMOOTH);
@@ -377,14 +524,13 @@ public class Pokedex extends javax.swing.JFrame {
             } 
                 
         }
-
+        cont_scroll.removeAll();
         cont_scroll.setLayout(new GridLayout(20,1));
-        //cont_scroll.setBackground(Color.WHITE);
         for (JButton lista_boton : lista_botones) {
+            
             cont_scroll.add(lista_boton);
         }
-        
-                                  
+                                 
         revalidate();
         repaint();
         
