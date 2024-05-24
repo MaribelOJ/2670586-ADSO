@@ -5,13 +5,13 @@ import java.awt.Image;
 
 public class Pokemon {
     String nombre;
-    Image img;
+    Image [] imagenes;
     String [] habilidades;
     String [] url_habilidad;
 
-    public Pokemon(String nombre, Image img, String[] habilidades, String[] url_habilidad) {
+    public Pokemon(String nombre, Image[] imagenes, String[] habilidades, String[] url_habilidad) {
         this.nombre = nombre;
-        this.img = img;
+        this.imagenes = imagenes;
         this.habilidades = habilidades;
         this.url_habilidad = url_habilidad;
     }
@@ -24,12 +24,12 @@ public class Pokemon {
         this.nombre = nombre;
     }
 
-    public Image getImg() {
-        return img;
+    public Image[] getImagenes() {
+        return imagenes;
     }
 
-    public void setImg(Image img) {
-        this.img = img;
+    public void setImagenes(Image[] imagenes) {
+        this.imagenes = imagenes;
     }
 
     public String[] getHabilidades() {
@@ -47,11 +47,7 @@ public class Pokemon {
     public void setUrl_habilidad(String[] url_habilidad) {
         this.url_habilidad = url_habilidad;
     }
-    
-    
 
    
-    
-    
     
 }

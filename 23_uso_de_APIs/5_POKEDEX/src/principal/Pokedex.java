@@ -31,6 +31,7 @@ public class Pokedex extends javax.swing.JFrame {
     DefaultTableModel modelo;
     JsonArray pokemones;
     int posicion;
+    int num_foto;
     
     public Pokedex() {
         this.consumo = new ConsumoAPI();
@@ -40,10 +41,12 @@ public class Pokedex extends javax.swing.JFrame {
         this.lista_botones = new JButton[20];
         this.pokemones=new JsonArray();
         this.posicion = -1;
+        this.num_foto = 0;
         this.lista_pokemones = new Pokemon[1302];
         initComponents();
-        initAlternComponents();
         listarPokemones(first_url);
+        initAlternComponents();
+        
     }
 
     
@@ -113,6 +116,11 @@ public class Pokedex extends javax.swing.JFrame {
         etq_img.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         btn_rewind.setBorderPainted(false);
+        btn_rewind.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_rewindActionPerformed(evt);
+            }
+        });
 
         btn_next.setBorderPainted(false);
         btn_next.addActionListener(new java.awt.event.ActionListener() {
@@ -195,10 +203,26 @@ public class Pokedex extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_nextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nextActionPerformed
-        posicion++;
-        mostrarPokemon(posicion);
+        num_foto++;
         btn_rewind.setEnabled(true);
+        if(num_foto == 4){
+            btn_next.setEnabled(false);
+        }
+        mostrarPokemon(posicion, num_foto);
+        revalidate();
+        repaint();
     }//GEN-LAST:event_btn_nextActionPerformed
+
+    private void btn_rewindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_rewindActionPerformed
+        num_foto--;
+        btn_next.setEnabled(true);
+        if(num_foto==0){
+            btn_rewind.setEnabled(false);
+        }
+        mostrarPokemon(posicion, num_foto);
+        revalidate();
+        repaint();
+    }//GEN-LAST:event_btn_rewindActionPerformed
     
     public void initAlternComponents(){
         setTitle("POKEDEX");
@@ -222,6 +246,11 @@ public class Pokedex extends javax.swing.JFrame {
         tablaDatos.getColumnModel().getColumn(2).setPreferredWidth(200);
         
         btn_rewind.setEnabled(false);
+        
+
+        etq_nombre.setText(lista_pokemones[0].getNombre());
+        
+        mostrarPokemon(0,0);
         
         setVisible(true);
         revalidate();
@@ -272,6 +301,10 @@ public class Pokedex extends javax.swing.JFrame {
          
             
             JsonObject sprites = objetoPokemon.get("sprites").getAsJsonObject();
+            String url_backDefault = sprites.get("back_default").getAsString();
+            String url_backShiny = sprites.get("back_shiny").getAsString();
+            String url_frontDefault = sprites.get("front_default").getAsString();
+            String url_frontShiny = sprites.get("front_shiny").getAsString();
             JsonObject other = sprites.get("other").getAsJsonObject();
             JsonObject home = other.get("home").getAsJsonObject();
             String url_img = home.get("front_default").getAsString();
@@ -283,33 +316,53 @@ public class Pokedex extends javax.swing.JFrame {
             try {
                 // Crear un objeto URL
                 URL ruta_img = new URL(url_img);
+                URL ruta_bkD = new URL(url_backDefault);
+                URL ruta_bkS = new URL(url_backShiny);
+                URL ruta_ftD = new URL(url_frontDefault);
+                URL ruta_ftS = new URL(url_frontShiny);
 
                 // Leer la imagen de la URL
                 BufferedImage image = ImageIO.read(ruta_img);
+                BufferedImage image2 = ImageIO.read(ruta_bkD);
+                BufferedImage image3 = ImageIO.read(ruta_ftD);
+                BufferedImage image4 = ImageIO.read(ruta_bkS);                
+                BufferedImage image5 = ImageIO.read(ruta_ftS);
 
-                // Crear un BufferedImage con el mismo tamaño y tipo de la imagen original
-                BufferedImage bufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+//              // Escalar las imágenes
+                Image scaledImage = image.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+                Image scaledImage2 = image2.getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+                Image scaledImage3 = image3.getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+                Image scaledImage4 = image4.getScaledInstance(400, 400, Image.SCALE_SMOOTH);
+                Image scaledImage5 = image5.getScaledInstance(400, 400, Image.SCALE_SMOOTH);
 
-                // Crear un objeto Graphics2D para dibujar la imagen en el BufferedImage
-                Graphics2D g = bufferedImage.createGraphics();
-                g.drawImage(image, 0, 0, null);
-                g.dispose(); // Liberar recursos del Graphics2D
-                // Crear un ImageIcon a partir del BufferedImage
-                ImageIcon imagenTemporal = new ImageIcon(bufferedImage);
-                Image imagen = imagenTemporal.getImage().getScaledInstance(250, 250, Image.SCALE_SMOOTH);
-                
+                // Crear los ImageIcon a partir de las imágenes escaladas
+                ImageIcon imagenTemporal = new ImageIcon(scaledImage);
+                ImageIcon imagenTemporal2 = new ImageIcon(scaledImage2);
+                ImageIcon imagenTemporal3 = new ImageIcon(scaledImage3);
+                ImageIcon imagenTemporal4 = new ImageIcon(scaledImage4);
+                ImageIcon imagenTemporal5 = new ImageIcon(scaledImage5);
+
+                // Almacenar los Image en un array
+                Image[] imagenes = new Image[]{
+                    imagenTemporal.getImage(),
+                    imagenTemporal2.getImage(),
+                    imagenTemporal3.getImage(),
+                    imagenTemporal4.getImage(),
+                    imagenTemporal5.getImage()
+                };
+
                 
                 for(int a=0;a < lista_pokemones.length; a++){
                 
                     if(lista_pokemones[a] == null){
-                        lista_pokemones[a]= new Pokemon(name, imagen, habilidades, links);
+                        lista_pokemones[a]= new Pokemon(name, imagenes, habilidades, links) ;
                         final int indice = a;
                         
                         btnPokemon.addActionListener(new ActionListener() {
 
                             @Override
                             public void actionPerformed(ActionEvent e) {
-                            mostrarPokemon(indice);
+                            mostrarPokemon(indice,0);
                             }
                         });
                         break;
@@ -336,17 +389,13 @@ public class Pokedex extends javax.swing.JFrame {
         repaint();
         
     }
-    
-    public void datosPokemon(){
-        
-    }
-    
-    public void mostrarPokemon(int indice){
-        Image foto = lista_pokemones[indice].getImg();  
+   
+    public void mostrarPokemon(int indice, int num){
+        Image [] fotos = lista_pokemones[indice].getImagenes();
+        Image foto = fotos[num];  
         etq_nombre.setText(lista_pokemones[indice].getNombre().toUpperCase());
         etq_img.setIcon(new ImageIcon(foto));
         
-
         
         modelo.setRowCount(0);
         String [] abilities = lista_pokemones[indice].getHabilidades();
