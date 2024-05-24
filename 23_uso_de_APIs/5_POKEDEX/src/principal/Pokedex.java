@@ -24,13 +24,12 @@ import util.Pokemon;
 
 public class Pokedex extends javax.swing.JFrame {
     ConsumoAPI consumo;
+    String first_url;
     String url;
-    String url_next;
-    String url_previous;
     JButton [] lista_botones;
     JButton [] paginas;
     Pokemon [] lista_pokemones;
-    String [] lista_rutas;
+    JsonObject [] lista_objects;
     DefaultTableModel modelo;
     JsonArray pokemones;
     int posicion;
@@ -39,17 +38,16 @@ public class Pokedex extends javax.swing.JFrame {
     int start;
     int end;
     int indice_boton;
-    int indice_ruta;
+    int indice_object;
     int indice_pokemon;
     
     public Pokedex() {
         this.consumo = new ConsumoAPI();
-        this.url = "https://pokeapi.co/api/v2/pokemon";
-        this.url_next="";
-        this.url_previous="";
+        this.first_url = "https://pokeapi.co/api/v2/pokemon";
+        this.url=first_url;
         this.lista_botones = new JButton[20];
         this.paginas = new JButton[11];
-        this.lista_rutas = new String[65];
+        this.lista_objects = new JsonObject[65];
         this.boton=2;
         this.start = 1;
         this.end = 7;
@@ -58,14 +56,14 @@ public class Pokedex extends javax.swing.JFrame {
         this.indice_boton=-1;
         this.num_foto = 0;
         this.lista_pokemones = new Pokemon[1302];
-        this.indice_ruta=0;
+        this.indice_object=0;
         this.indice_pokemon=0;
         
         initComponents();
-        listarPokemones();
-        llenarContLateral();
         initAlternComponents();
+        listarPokemones();
         cargarPaginador();
+        mostrarPokemon(0,0,0);
         
     }
 
@@ -267,8 +265,7 @@ public class Pokedex extends javax.swing.JFrame {
         tablaDatos.getColumnModel().getColumn(0).setPreferredWidth(5);
         tablaDatos.getColumnModel().getColumn(1).setPreferredWidth(10);
         tablaDatos.getColumnModel().getColumn(2).setPreferredWidth(100);
-          
-        mostrarPokemon(0,0,0);
+
         
         btn_rewind.setEnabled(false);
         setVisible(true);
@@ -290,12 +287,12 @@ public class Pokedex extends javax.swing.JFrame {
                   
         paginas[0]=btn_first;
         paginas[1]=btn_previous;
-        if(url_previous == null){
-            paginas[1].setEnabled(false);
-        }
-        if(url_next== null){
-            paginas[9].setEnabled(false);
-        }
+//        if(url_previous == null){
+//            paginas[1].setEnabled(false);
+//        }
+//        if(url_next== null){
+//            paginas[9].setEnabled(false);
+//        }
 
         
         int num=1;
@@ -350,13 +347,13 @@ public class Pokedex extends javax.swing.JFrame {
             }
         }
         if(num_boton == 0){
-            indice_ruta=0;
+            indice_object=0;
             start=1;
             end=7;
         }
             
         if(num_boton == 10){
-            indice_ruta=1280;
+            indice_object=1280;
             start=59;
             end=65;
         }
@@ -364,7 +361,7 @@ public class Pokedex extends javax.swing.JFrame {
         if(num_boton == 9){
             paginas[1].setEnabled(true);
             boton++;
-            indice_ruta+=1;
+            indice_object+=1;
             
             if(boton>5){
                 start++;
@@ -375,7 +372,7 @@ public class Pokedex extends javax.swing.JFrame {
         
         if(num_boton == 1){
             paginas[9].setEnabled(true);
-            indice_ruta-=1;            
+            indice_object-=1;            
             if(boton==5){
                 start--;
                 end--;
@@ -407,7 +404,8 @@ public class Pokedex extends javax.swing.JFrame {
             for(int i=2; i<num_boton;i++){
                 num++;
             }
-            indice_ruta=num-1;
+            indice_object=num-1;
+            System.out.println(indice_object);
   
         }
         listarPokemones();
@@ -417,20 +415,16 @@ public class Pokedex extends javax.swing.JFrame {
     }
     
     public void listarPokemones(){
-        for(int i=0; i<lista_rutas.length;i++){
-            String respuesta = consumo.consumoGET(url);
-            JsonObject objeto = JsonParser.parseString(respuesta).getAsJsonObject();
-            if(!objeto.get("next").isJsonNull()){
-                lista_rutas[i]=url;
-                String link = objeto.get("next").getAsString();
-                url=link;
-            }
-        }        
-        
-
-        
-        String respuesta01 = consumo.consumoGET(lista_rutas[indice_ruta]);
-        JsonObject objeto = JsonParser.parseString(respuesta01).getAsJsonObject();
+        String respuesta = consumo.consumoGET(url);
+        JsonObject objeto = JsonParser.parseString(respuesta).getAsJsonObject();
+         if(url != null){
+            lista_objects[indice_object]=objeto;
+        }
+        if(!objeto.get("next").isJsonNull()){
+            url=objeto.get("next").getAsString();
+        }else{
+            url=null;
+        }
 
         pokemones = objeto.get("results").getAsJsonArray();
 
@@ -525,7 +519,9 @@ public class Pokedex extends javax.swing.JFrame {
                 e.printStackTrace();
                 System.out.println("Error al descargar la imagen.");
             } 
-        }    
+        }
+        
+        llenarContLateral();
         
     }
     
@@ -555,7 +551,6 @@ public class Pokedex extends javax.swing.JFrame {
             
             cont_scroll.add(lista_boton);
         }
-        
         
         revalidate();
         repaint();
