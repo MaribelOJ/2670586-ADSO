@@ -190,7 +190,6 @@ public class Pokedex extends javax.swing.JFrame {
         
     }
     
-    
     public void cargarPaginador(){
         // actualizar lo num del arreglo
 

@@ -28,6 +28,8 @@ import util.Pokemon;
 public class Pokedex extends javax.swing.JFrame {
     ConsumoAPI consumo;
     String url;
+    String first_url;
+    String last_url;
     JButton [] paginas;
     JsonObject [] lista_pokemones;
     JsonObject [] lista_objects;
@@ -36,22 +38,32 @@ public class Pokedex extends javax.swing.JFrame {
     int indice_object;
     int indice_pokemon;
     int indice;
+    int btn_selected;
+    int cantidad;
     
     public Pokedex() {
         this.consumo = new ConsumoAPI();
-        this.url = "https://pokeapi.co/api/v2/pokemon";           
+        this.first_url="https://pokeapi.co/api/v2/pokemon";
+        this.url = first_url;           
         this.paginas = new JButton[7];
         this.num_foto = 0;
         this.indice_object=0;
         this.indice_pokemon=0;
-        this.indice=0;
+        this.indice=-1;
+        this.btn_selected=0;
         
-        String respuesta = consumo.consumoGET(url);
+        String respuesta = consumo.consumoGET(first_url);
         JsonObject objeto = JsonParser.parseString(respuesta).getAsJsonObject();
         this.lista_pokemones = new JsonObject[20];
-        int cantidad =(int)Math.ceil(objeto.get("count").getAsInt()/20);
+        this.cantidad =(int)Math.ceil(objeto.get("count").getAsInt()/20.0);
         this.lista_objects = new JsonObject[cantidad];
         this.lista_objects[indice_object]=objeto;
+        
+        this.last_url="https://pokeapi.co/api/v2/pokemon?offset="+((cantidad*20)-20)+"&limit=20";
+        String respuesta2 = consumo.consumoGET(last_url);
+        JsonObject objeto2 = JsonParser.parseString(respuesta2).getAsJsonObject();
+        this.lista_objects[cantidad-1]=objeto2;
+        
         
         initComponents();
         initAlternComponents();
@@ -279,25 +291,65 @@ public class Pokedex extends javax.swing.JFrame {
         
         JButton btn_first= new JButton("<<");
         JButton btn_previous = new JButton("<");
+        
+        btn_first.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                indice_object=0;
+                listarPokemones();
+                mostrarPokemon(0);
+                
+            }
+        });
+        
+        btn_previous.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                btn_selected--;
+                indice_object=btn_selected;
+                listarPokemones();
+                mostrarPokemon(0);
+
+                actualizar_paginador(btn_selected);
+                
+                if(btn_selected == 0){
+                    btn_previous.setEnabled(false);
+                }
+                
+            }
+        });
 
         cont_botones.add(btn_first);
         cont_botones.add(btn_previous);
         
         for(int i=0;i < paginas.length; i++){
             JButton btn_middle = new JButton(""+(indice_object + 1));
+            if(btn_selected == 0){
+                btn_previous.setEnabled(false);
+            }
+            
+            if(btn_selected == indice_object){
+               btn_middle.setBackground(Color.blue);
+               btn_middle.setForeground(Color.white);
+            }else{
+                btn_middle.setBackground(Color.white);
+            }
 
             final int new_page = indice_object;
             btn_middle.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     indice_object = new_page;
-                    
+                    btn_selected=indice_object;
+                    if(indice_object != 0){
+                        btn_previous.setEnabled(true);
+                    }
                     listarPokemones();
                     mostrarPokemon(0);
                     actualizar_paginador(indice_object);
                 }
             });
-            System.out.println("indice objeto: " + indice_object);
             if(!lista_objects[indice_object].get("next").isJsonNull()){
                 url=lista_objects[indice_object].get("next").getAsString();
 
@@ -315,8 +367,39 @@ public class Pokedex extends javax.swing.JFrame {
         JButton btn_last = new JButton(">>");
         JButton btn_following = new JButton(">");
         
+        btn_last.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+ 
+                indice_object = cantidad - 1;
+                listarPokemones();
+                mostrarPokemon(0);
+            }
+        });
+        
+        btn_following.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                btn_previous.setEnabled(true);
+                btn_selected++;
+                indice_object=btn_selected;
+                listarPokemones();
+                mostrarPokemon(0);
+
+                actualizar_paginador(btn_selected);
+                
+                
+                if(indice_object == 65){
+                    btn_following.setEnabled(false);
+                }
+                
+            }
+        });
+        
         cont_botones.add(btn_following);
         cont_botones.add(btn_last);
+        indice_object=0;
         
         repaint();
         revalidate(); 
@@ -351,6 +434,16 @@ public class Pokedex extends javax.swing.JFrame {
             
             JButton btnPokemon = new JButton(name);
             btnPokemon.setBackground(Color.white);
+            
+            if(indice != -1){
+                    if(indice == i){
+                        btnPokemon.setBackground(Color.blue);
+                        btnPokemon.setForeground(Color.white);
+                    }
+            }else if(i==0){
+                btnPokemon.setBackground(Color.blue);
+                btnPokemon.setForeground(Color.white);
+            }
             final int num_pokemon =indice_pokemon; 
             
             btnPokemon.addActionListener(new ActionListener(){
@@ -360,6 +453,7 @@ public class Pokedex extends javax.swing.JFrame {
                     num_foto = 0;
                     btn_next.setEnabled(true);
                     btn_rewind.setEnabled(false);
+
                     mostrarPokemon(num_pokemon);
                 }
             });
@@ -392,7 +486,7 @@ public class Pokedex extends javax.swing.JFrame {
         modelo.setRowCount(0);
         for(int j=0; j < abilities.size();j++){
             JsonObject ability = abilities.get(j).getAsJsonObject().getAsJsonObject("ability");
-            Object[] fila = new Object[]{ 0, ability.get("name").getAsString(), ability.get("url").getAsString()};
+            Object[] fila = new Object[]{ j+1, ability.get("name").getAsString(), ability.get("url").getAsString()};
             modelo.addRow(fila);
         }
 
@@ -412,6 +506,7 @@ public class Pokedex extends javax.swing.JFrame {
             Logger.getLogger(Pokedex.class.getName()).log(Level.SEVERE, null, ex);
         }            
         this.indice=indice;
+        listarPokemones();
         revalidate();
         repaint();
     
