@@ -48,7 +48,7 @@ public class Pokedex extends javax.swing.JFrame {
         
         String respuesta = consumo.consumoGET(url);
         JsonObject objeto = JsonParser.parseString(respuesta).getAsJsonObject();
-        this.lista_pokemones = new JsonObject[objeto.get("count").getAsInt()];
+        this.lista_pokemones = new JsonObject[20];
         int cantidad =(int)Math.ceil(objeto.get("count").getAsInt()/20);
         this.lista_objects = new JsonObject[cantidad];
         this.lista_objects[indice_object]=objeto;
@@ -291,11 +291,13 @@ public class Pokedex extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     indice_object = new_page;
+                    
                     listarPokemones();
-                    mostrarPokemon(indice_pokemon-20);
+                    mostrarPokemon(0);
+                    actualizar_paginador(indice_object);
                 }
             });
-            
+            System.out.println("indice objeto: " + indice_object);
             if(!lista_objects[indice_object].get("next").isJsonNull()){
                 url=lista_objects[indice_object].get("next").getAsString();
 
@@ -320,7 +322,18 @@ public class Pokedex extends javax.swing.JFrame {
         revalidate(); 
         
     }
-        
+    
+    public void actualizar_paginador(int i){
+        if(i >3){
+            indice_object=i-3;
+            
+        }else{
+            indice_object=0;
+        }
+
+        cargarPaginador();
+    }
+   
     public void listarPokemones(){
                        
         JsonArray pokemones = lista_objects[indice_object].get("results").getAsJsonArray();
@@ -359,8 +372,7 @@ public class Pokedex extends javax.swing.JFrame {
            
              
         }
-        System.out.println("indice pokemon:"+indice_pokemon);
-               
+        indice_pokemon=0;               
         revalidate();
         repaint();
 
@@ -368,7 +380,7 @@ public class Pokedex extends javax.swing.JFrame {
     }
      
     public void mostrarPokemon(int indice){
-        System.out.println("Respuesta pokemones: "+ lista_pokemones[indice]);
+        
         etq_nombre.setText( lista_pokemones[indice].get("name").getAsString());
         String rutaPokemon = lista_pokemones[indice].get("url").getAsString();
 
