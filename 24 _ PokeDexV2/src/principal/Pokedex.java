@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Box;
@@ -17,13 +18,17 @@ public class Pokedex extends javax.swing.JFrame {
     ConsumoAPI consumo;
     int pagina;
     int [] listaNumeros;
-    int indice;
+    int first_num;
+    int step;
+    String pokemon_name;
     
     public Pokedex() {
         this.consumo = new ConsumoAPI();
-        this.pagina = 2;
+        this.pagina = 1;
         this.listaNumeros = new int[]{1,2,3,4,5,6,7};
-        this.indice=0;
+        this.first_num=0;
+        this.step = -1;
+        this.pokemon_name ="";
         
         initComponents();
         initAlternComponents();
@@ -123,17 +128,43 @@ public class Pokedex extends javax.swing.JFrame {
         
         JsonObject dataJson = JsonParser.parseString(data).getAsJsonObject();
         JsonArray results = dataJson.getAsJsonArray("results");
+        panelBotones.removeAll();
+        Dimension size = new Dimension(panelBotones.getSize().width, 30);
         for (int i=0; i<results.size(); i++) {
-            JsonObject temp = results.get(i).getAsJsonObject();
             
+            JsonObject temp = results.get(i).getAsJsonObject();
             JButton btn = new JButton( temp.get("name").getAsString() );
+            btn.setPreferredSize(size);
+            btn.setMaximumSize(size); 
+            btn.setMinimumSize(size);
             panelBotones.add(btn);
             
+            if(i==0){
+                if(temp.get("name").getAsString().equalsIgnoreCase(pokemon_name) || pokemon_name.equals("")){
+                    btn.setBackground(Color.blue);
+                    btn.setForeground(Color.WHITE);
+                }else{
+                    btn.setBackground(Color.white);
+                }   
+            }else if(!btn.getText().equalsIgnoreCase(pokemon_name)){
+                btn.setBackground(Color.white);
+            }else{
+               btn.setBackground(Color.blue);
+               btn.setForeground(Color.WHITE);
+            }
+                    
             btn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Nombre: "+ temp.get("name").getAsString());
                     System.out.println("Url: "+temp.get("url").getAsString());
+                    
+                    pokemon_name=temp.get("name").getAsString();
+                    if(btn.getText().equalsIgnoreCase(pokemon_name)){
+                        btn.setBackground(Color.blue);
+                        btn.setForeground(Color.WHITE);
+                        cargarPokemones();
+                    }
                     
                     panelDetalle.removeAll();
                     DetallePokemon detalle = new DetallePokemon( temp );
@@ -173,6 +204,7 @@ public class Pokedex extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pagina = 1;
+                pokemon_name="";
                 cargarPokemones();
             }
         });
@@ -182,7 +214,9 @@ public class Pokedex extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(pagina != listaNumeros[0]){
                     pagina = pagina-1;
-                }   
+                    actualizarArray();
+                }
+                pokemon_name="";
                 cargarPokemones();
             }
         });
@@ -192,6 +226,7 @@ public class Pokedex extends javax.swing.JFrame {
         
         for(int i=0;i < listaNumeros.length; i++){
             JButton btn_medios = new JButton(""+listaNumeros[i]);
+            
             if(listaNumeros[i] == pagina){
                btn_medios.setBackground(Color.blue);
                btn_medios.setForeground(Color.white);
@@ -204,7 +239,10 @@ public class Pokedex extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     pagina = new_page;
+                    pokemon_name="";
                     cargarPokemones();
+                    actualizarArray();
+                    
                 }
             });
             panelPaginador.add(btn_medios);
@@ -217,6 +255,7 @@ public class Pokedex extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 pagina = 66;
+                pokemon_name="";
                 cargarPokemones();
             }
         });
@@ -226,7 +265,10 @@ public class Pokedex extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(pagina != 66){
                     pagina = pagina+1;
+                    actualizarArray();
+
                 }
+                pokemon_name="";
                 cargarPokemones();
             }
         });
@@ -241,6 +283,54 @@ public class Pokedex extends javax.swing.JFrame {
 
     }
     
+    public void actualizarArray(){
+        
+        if(pagina == listaNumeros[4] || pagina == listaNumeros[2]){
+            if(pagina == listaNumeros[2] && listaNumeros[2] == 3){
+                step = -1;
+            }else{
+                step=0;
+            }
+        }else if(pagina == listaNumeros[5] || pagina == listaNumeros[1]){
+            if(pagina == listaNumeros[1] && listaNumeros[1] == 2){
+                step = -1;
+            }else{
+                step=1;
+            }
+    
+        }else if(pagina == listaNumeros[6] || pagina == listaNumeros[0]){                           
+            if(pagina == listaNumeros[0] && listaNumeros[0] == 1){
+                step = -1;
+            }else if(pagina == listaNumeros[0] && listaNumeros[0] == 2){
+                step=0;
+            }else{
+                step=2;
+            }   
+        }
+        
+        
+        if(pagina < listaNumeros[4] && step >= 0){
+            first_num = listaNumeros[0]-step;
+            
+            for(int i=0; i< listaNumeros.length;i++ ){      
+                listaNumeros[i] = first_num - 1;
+                first_num++;
+            }    
+        }else{
+            
+            first_num = listaNumeros[0]+step;
+        
+            for(int i=0; i< listaNumeros.length;i++ ){      
+                listaNumeros[i] = first_num + 1;
+                first_num++;
+            }
+        
+        }
+        
+        cargarPaginador();
+        revalidate();
+        repaint();
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel contentPrincipal;

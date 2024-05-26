@@ -53,7 +53,7 @@ public class DetallePokemon extends javax.swing.JPanel {
         
         this.listaImagenes = new String[3];
         this.listaImagenes[0] = this.pokemon.getAsJsonObject("sprites").getAsJsonObject("other").getAsJsonObject("official-artwork").get("front_default").getAsString();
-        this.listaImagenes[1] = this.pokemon.getAsJsonObject("sprites").getAsJsonObject("other").getAsJsonObject("official-artwork").get("front_shiny").getAsString();
+        this.listaImagenes[1] = this.pokemon.getAsJsonObject("sprites").getAsJsonObject("other").getAsJsonObject("home").get("front_shiny").getAsString();
         this.listaImagenes[2] = this.pokemon.getAsJsonObject("sprites").getAsJsonObject("other").getAsJsonObject("home").get("front_default").getAsString();
         this.posActual = 0;
         cargarImagenPokemon();
