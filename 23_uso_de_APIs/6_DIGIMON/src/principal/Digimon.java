@@ -1,10 +1,16 @@
 
 package principal;
 
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import util.ConsumoAPI;
@@ -19,7 +25,7 @@ public class Digimon extends javax.swing.JFrame {
         num_pokemon = 0;
         initComponents();
         initAlternComponents();
-        cargarPokemones();
+        cargarDigimones();
     }
 
     @SuppressWarnings("unchecked")
@@ -99,7 +105,7 @@ public class Digimon extends javax.swing.JFrame {
 
     public void initAlternComponents(){
         setTitle("DIGIMON");
-        setIconImage( getToolkit().createImage(ClassLoader.getSystemResource("imagenes/digimonLogo.png")) );
+        setIconImage( getToolkit().createImage(ClassLoader.getSystemResource("imagenes/digivice.png")) );
         setLocationRelativeTo(null);
         setVisible(true);
         
@@ -110,16 +116,18 @@ public class Digimon extends javax.swing.JFrame {
         etq_titulo.setIcon(new ImageIcon(iconoTitulo));    
     }
     
-    public void cargarPokemones(){
-        
+    public void cargarDigimones(){
+        cont_digimones.removeAll();
         for(int i=0; i<5;i++){
             num_pokemon++;
             String endpoint = "https://digi-api.com/api/v1/digimon/"+num_pokemon;
             DigimonCard card = new DigimonCard(endpoint);
             card.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
-            cont_digimones.add(card);
 
+            cont_digimones.add(card);             
         }
+        repaint();
+        revalidate();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel cont_digimones;

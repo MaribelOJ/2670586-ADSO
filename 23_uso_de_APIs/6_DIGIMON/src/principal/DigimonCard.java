@@ -5,8 +5,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -21,6 +23,7 @@ public class DigimonCard extends javax.swing.JPanel {
     
     ConsumoAPI consumo;
     String data;
+    
     
     public DigimonCard(String endpoint) {
         this.consumo = new ConsumoAPI();
@@ -38,13 +41,14 @@ public class DigimonCard extends javax.swing.JPanel {
         etq_img = new javax.swing.JLabel();
         etq_nombre = new javax.swing.JLabel();
 
-        addMouseListener(new java.awt.event.MouseAdapter() {
+        cont_principal.setBackground(new java.awt.Color(255, 255, 255));
+        cont_principal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                formMouseClicked(evt);
+                cont_principalMouseClicked(evt);
             }
         });
 
-        cont_principal.setBackground(new java.awt.Color(255, 255, 255));
+        etq_img.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         etq_nombre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
@@ -81,33 +85,41 @@ public class DigimonCard extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        
-    }//GEN-LAST:event_formMouseClicked
+    private void cont_principalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cont_principalMouseClicked
+        Detalles_digimon resumen = new Detalles_digimon(data);
+    }//GEN-LAST:event_cont_principalMouseClicked
 
     public void initAlternComponents(){
         JsonObject dataJson = JsonParser.parseString(data).getAsJsonObject();
         String name = dataJson.get("name").getAsString();
         etq_nombre.setText(name);
         JsonArray results = dataJson.getAsJsonArray("images");
-        
-        for (int i=0; i<results.size(); i++) {
-            JsonObject temp = results.get(i).getAsJsonObject();
-            String url = temp.get("href").getAsString();
-            try {
 
-                URL imgUrl = new URL(url);
-                Image imagen = getToolkit().createImage(imgUrl);
-                imagen = imagen.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-                etq_img.setIcon(new ImageIcon(imagen));
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(DigimonCard.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        JsonObject temp = results.get(0).getAsJsonObject();
+        String url = temp.get("href").getAsString();
+        try {
+
+            URL imgUrl = new URL(url);
+            Image imagen = getToolkit().createImage(imgUrl);
+            imagen = imagen.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            etq_img.setIcon(new ImageIcon(imagen));
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(DigimonCard.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         
-        cont_principal.setBorder(BorderFactory.createLineBorder(Color.white, 1));
         cont_principal.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e){
+                cont_principal.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                cont_principal.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1));
+            }
             
+            @Override
+            public void mouseExited(MouseEvent e) {
+                cont_principal.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                cont_principal.setBorder(BorderFactory.createEmptyBorder());
+            }
         });
         
     }
