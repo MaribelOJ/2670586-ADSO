@@ -92,7 +92,14 @@ public class DigimonCard extends javax.swing.JPanel {
     public void initAlternComponents(){
         JsonObject dataJson = JsonParser.parseString(data).getAsJsonObject();
         String name = dataJson.get("name").getAsString();
-        etq_nombre.setText(name);
+        
+        if(name.length() > 14){
+            String nombre = name.substring(0, 14);
+            etq_nombre.setText(nombre+"...");
+        }else{
+            etq_nombre.setText(name);
+        }
+        
         JsonArray results = dataJson.getAsJsonArray("images");
 
         JsonObject temp = results.get(0).getAsJsonObject();
