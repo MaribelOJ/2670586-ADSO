@@ -3,9 +3,11 @@ package principal;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -15,8 +17,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.Timer;
 import util.ConsumoAPI;
 
 
@@ -34,10 +39,10 @@ public class Digimon extends javax.swing.JFrame {
         JsonObject objeto = JsonParser.parseString(respuesta).getAsJsonObject();
         JsonObject paginas = objeto.get("pageable").getAsJsonObject();
         this.total_pag = (paginas.get("totalPages").getAsInt())+1;
+        
         initComponents();
         initAlternComponents();
-        cargarDigimones();
-        cargarPaginador();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -114,11 +119,46 @@ public class Digimon extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         
-        cont_digimones.setLayout(new GridLayout(2,3));
+        Image icono_gif = getToolkit().createImage(ClassLoader.getSystemResource("imagenes/cargando.gif"));
+        icono_gif = icono_gif.getScaledInstance(300, 350, Image.SCALE_DEFAULT);
+        JLabel etq_gif = new JLabel();
+        etq_gif.setIcon(new ImageIcon(icono_gif));
+        etq_gif.setHorizontalAlignment(JLabel.CENTER);
         
-        Image iconoTitulo = getToolkit().createImage(ClassLoader.getSystemResource("imagenes/digimonLogo.png"));
-        iconoTitulo = iconoTitulo.getScaledInstance(90, 50, Image.SCALE_SMOOTH);
-        etq_titulo.setIcon(new ImageIcon(iconoTitulo));    
+    
+        cont_digimones.setBackground(Color.white);
+        cont_digimones.setLayout(new GridBagLayout());
+        GridBagConstraints restriccion = new GridBagConstraints();
+        restriccion.gridx = 0;
+        restriccion.gridy = 0;
+        
+        cont_digimones.add(etq_gif,restriccion);
+        cont_paginador.setBackground(Color.white);
+        
+        revalidate();
+        repaint();
+        Timer timer = new Timer(3000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cont_digimones.removeAll();
+                cont_digimones.setBackground(Color.decode("#F2F2F2"));
+                cont_paginador.setBackground(Color.decode("#F2F2F2"));
+                cont_digimones.setLayout(new GridLayout(2,3));
+        
+                Image iconoTitulo = getToolkit().createImage(ClassLoader.getSystemResource("imagenes/digimonLogo.png"));
+                iconoTitulo = iconoTitulo.getScaledInstance(90, 50, Image.SCALE_SMOOTH);
+                etq_titulo.setIcon(new ImageIcon(iconoTitulo)); 
+
+                cargarDigimones();
+                cargarPaginador();
+                revalidate();
+                repaint();
+            }
+        });
+
+        timer.setRepeats(false);
+        
+        timer.start();  
     }
     
     public void cargarDigimones(){
