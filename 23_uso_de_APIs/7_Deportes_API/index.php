@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>API de Gestión de Personas</h1>
+        <h1>API de Gestión de Deportes</h1>
         <ul id="endpoint-list">
             <li>
         		<h4 style="margin-top: 10px;margin-bottom: 10px;">EndPoint: <span class="endpoint-name"> <a href="./API/Obtener_categorias.php">API/Obtener_categorias.php</a> </span></h4>
