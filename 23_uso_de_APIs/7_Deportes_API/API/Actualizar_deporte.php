@@ -6,18 +6,20 @@
         $id_deporte = $_POST['id_deporte'];
         $nombre = $_POST['nombre'];
         $modalidad = $_POST['modalidad'];
-        $paricipantes_min = $_POST['paricipantes_min'];
+        $participantes_min = $_POST['participantes_min'];
         $participantes_max = $_POST['participantes_max'];
+        $implementos=$_POST['implementos'];
         $categoria = $_POST['categoria'];
 
         try {
-            $consulta = $base_de_datos->prepare("UPDATE deportes SET nombre=:nom, modalidad=:mod, participantes_min=:pmin, participantes_max=:pmax, categoria=:cat WHERE id_deporte = :id ");
+            $consulta = $base_de_datos->prepare("UPDATE deportes SET nombre=:nom, modalidad=:mod, participantes_min=:pmin, participantes_max=:pmax,implementos=:imp, categoria=:cat WHERE id_deporte = :id ");
 
             $consulta->bindParam(':id', $id_deporte);
             $consulta->bindParam(':nom', $nombre);
             $consulta->bindParam(':mod', $modalidad);
             $consulta->bindParam(':pmin', $participantes_min);
             $consulta->bindParam(':pmax', $participantes_max);
+            $consulta->bindParam(':imp', $implementos);
             $consulta->bindParam(':cat', $categoria);
             
             $proceso = $consulta->execute();

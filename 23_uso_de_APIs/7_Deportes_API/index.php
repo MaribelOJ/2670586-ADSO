@@ -111,7 +111,7 @@
         		<h5>Metodo: POST</h5>
         		<h5>Parametros:</h5>
         		<ul class="input-list">
-
+					<li><i><b>int</b></i> id_deporte</li>
 					<li><i><b>String</b></i> nombre</li>
 					<li><i><b>String</b></i> modalidad</li>
 					<li><i><b>String</b></i> participantes_min</li>

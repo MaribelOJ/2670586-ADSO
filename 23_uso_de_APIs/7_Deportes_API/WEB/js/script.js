@@ -46,7 +46,7 @@ var cargarDeportes = function() {
 
             const boton1 = document.createElement('button');
             const nodoBoton1 = document.createTextNode(' Eliminar ');
-            let parametro1 = "eliminarPersona('"+data[i].id_deporte+"')";
+            let parametro1 = "eliminarDeporte('"+data[i].id_deporte+"')";
             boton1.setAttribute('onclick', parametro1);
             boton1.classList.add("btn", "btn-danger");
             boton1.appendChild(nodoBoton1);
@@ -55,7 +55,7 @@ var cargarDeportes = function() {
             const nodoBoton2 = document.createTextNode(' Editar ');
             boton2.setAttribute('data-bs-toggle', 'modal');
             boton2.setAttribute('data-bs-target', '#form');
-            let parametro2 = "editarPersona('"+data[i].id_deporte+"')";
+            let parametro2 = "editarDeporte('"+data[i].id_deporte+"')";
             boton2.setAttribute('onclick', parametro2);
             boton2.classList.add("btn", "btn-success");
             boton2.appendChild(nodoBoton2);
@@ -77,8 +77,7 @@ var cargarDeportes = function() {
             table_row.appendChild(td_editar);
             table_row.appendChild(td_eliminar);
 
-            table_body.appendChild(table_row);
-            
+            table_body.appendChild(table_row); 
 
         }
     });
@@ -86,14 +85,13 @@ var cargarDeportes = function() {
 
 window.onload = cargarDeportes;
 
-function insertarDeporte(){
+function insertarDeporte(id){
     
     nombre = document.getElementById("nombre").value;
     mod = document.getElementById("modalidad").value;
     players = document.getElementById("participantes").value;
     items = document.getElementById("implementos").value;
     type = document.getElementById("categoria").value;
-    console.log("ctaegoria: "+ type);
 
     let minMax = players.split("-");
 
@@ -116,7 +114,6 @@ function insertarDeporte(){
         fetch("http://localhost/Deportes_API/API/Obtener_categorias.php")
         .then( res => res.json())
         .then( data => {
-            console.log(" entró");
             for(var a = 0; a < data.length; a++){
                 if(type == data[a].nombre){
                     let cat = data[a].id_categoria;
@@ -125,36 +122,122 @@ function insertarDeporte(){
                 }
             }
 
-            let config = {
-                method: "POST",
-                headers: {
-                    "Accept" : "application/json"
-                },
-                body: datos,
-            };
+            
+            if(id == 0){
+
+                let config = {
+                    method: "POST",
+                    headers: {
+                        "Accept" : "application/json"
+                    },
+                    body: datos,
+                };    
     
-            fetch('http://localhost/Deportes_API/API/Insertar_deporte.php', config)
-            .then( res => res.json())
-            .then( data => {
-                console.log(" entró2");
-                table_body.innerHTML = "";
-                limpiarCampos();
-                cargarDeportes();
-    
-            });
+                fetch('http://localhost/Deportes_API/API/Insertar_deporte.php', config)
+                .then( res => res.json())
+                .then( data => {     
+                    table_body.innerHTML = "";
+                    limpiarCampos();
+                    cargarDeportes();             
+        
+                });
+            }else{
+
+                datos.append("id_deporte", id);
+
+                let config = {
+                    method: "POST",
+                    headers: {
+                        "Accept" : "application/json"
+                    },
+                    body: datos,
+                };  
+
+
+                fetch('http://localhost/Deportes_API/API/Actualizar_deporte.php', config)
+                .then( res => res.json())
+                .then( data => {
+                    if(data.status == true){
+                        table_body.innerHTML = "";
+                        limpiarCampos();
+                        cargarDeportes();  
+                                          
+                    }        
+                });
+            }
         }); 
     }
 }
 
-function cargarCategorias(){
+function editarDeporte(id){
+    titulo_modal = document.getElementById('titulo_modal');
+    encabezado = document.getElementById('encabezado');
+    titulo_nuevo = document.createElement('h1');
+    titulo_nuevo.id="titulo_modal";
+    titulo_nuevo.classList.add("modal-title","fs-5");    
+    let txt_titulo = document.createTextNode('Actualizar información: ');
+    titulo_nuevo.appendChild(txt_titulo);
+    encabezado.replaceChild(titulo_nuevo, titulo_modal);
+  
+    let btn_enviar = document.getElementById("btn_enviar");
+    btn_enviar.setAttribute('onclick','insertarDeporte("'+id+'")')
+
+    let endpoint = "http://localhost/Deportes_API/API/Obtener_deportes.php";
+
+    fetch(endpoint)
+    .then( res => res.json())
+    .then( data => {
+
+        for( var i=0; i<data.length; i++){
+            if(data[i].id_deporte == id){
+
+                document.getElementById("nombre").value = data[i].nombre;
+                document.getElementById("modalidad").value = data[i].modalidad;
+                document.getElementById("participantes").value = data[i].participantes_min +"-"+data[i].participantes_max;
+                document.getElementById("implementos").value = data[i].implementos;
+
+                cargarCategorias(data[i].categoria);
+                break;
+            }
+        }
+
+    });
+}
+
+function eliminarDeporte(id){
+
+    let datos = new FormData();
+    datos.append("id_deporte", id);
+
+    let config = {
+                    method: "POST",
+                    headers: {
+                        "Accept" : "application/json"
+                    },
+                    body: datos,
+                 };
+    
+    fetch('http://localhost/Deportes_API/API/Eliminar_deporte.php', config)
+    .then( res => res.json())
+    .then( data => {
+
+        table_body.innerHTML = "";
+        cargarDeportes();
+    });    
+}
+
+function cargarCategorias(indice){
+
+    document.getElementById("categoria").innerHTML="";
     var select = document.getElementById("categoria");
     let endpoint = "http://localhost/Deportes_API/API/Obtener_categorias.php";
 
     let opc = document.createElement('option');
-    opc.value="seleccionar";
+    opc.selected;
     opc.textContent ="Seleccionar";
     select.appendChild(opc);
 
+    let chosen="";
     fetch(endpoint)
     .then( res => res.json())
     .then( data => {
@@ -164,16 +247,29 @@ function cargarCategorias(){
             let opc = document.createElement('option');
             opc.value=data[a].nombre;
             opc.textContent =data[a].nombre;
-            select.appendChild(opc);   
-        }
-    });
-}
+            select.appendChild(opc);
+            
 
+            if((indice-1) == a){
+                
+                chosen = data[a].nombre;
+            }
+        }
+
+        if(indice == 0){
+            chosen="Seleccionar";
+        }
+        
+        select.value=chosen;
+
+    });
+    
+}
 
 function limpiarCampos(){
     
     document.getElementById("nombre").value  = "";
-    document.getElementById("modalidad").value = "";
+    document.getElementById("modalidad").selectedIndex = 0;
     document.getElementById("participantes").value = "";
     document.getElementById("implementos").value = "";
 

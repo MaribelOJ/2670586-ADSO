@@ -38,7 +38,7 @@
                     <tfoot>
                         <tr>
                             <td colspan="8" class="text-center">
-                                <button class="btn btn-info  text-white" type="button" data-bs-toggle="modal" data-bs-target="#form" onclick="cargarCategorias()"> Registrar </button>
+                                <button class="btn btn-info  text-white" type="button" data-bs-toggle="modal" data-bs-target="#form" onclick="cargarCategorias(0)"> Registrar </button>
                             </td>
                         </tr>
                     </tfoot>                   
@@ -92,7 +92,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="limpiarCampos()">Close</button>
-          <button class="btn btn-info" type="button" onclick="insertarDeporte()" data-bs-dismiss="modal">Enviar</button>
+          <button class="btn btn-info" type="button" onclick="insertarDeporte(0)" data-bs-dismiss="modal" id="btn_enviar">Enviar</button>
         </div>
       </div>
     </div>
