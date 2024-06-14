@@ -61,7 +61,7 @@
         	</li>
 
             <li>
-        		<h4 style="margin-top: 10px;margin-bottom: 10px;">EndPoint: <span class="endpoint-name"> <a href="./API/Insertar_deporte.php">API/Insertar_deportes.php</a> </span></h4>
+        		<h4 style="margin-top: 10px;margin-bottom: 10px;">EndPoint: <span class="endpoint-name"> <a href="./API/Insertar_deporte.php">API/Insertar_deporte.php</a> </span></h4>
         		<h5>Metodo: POST</h5>
         		<h5>Parametros:</h5>
         		<ul class="input-list">
@@ -69,7 +69,8 @@
 					<li><i><b>String</b></i> modalidad</li>
 					<li><i><b>String</b></i> participantes_min</li>
 					<li><i><b>String</b></i> participantes_max</li>
-					<li><i><b>String</b></i> categoria</li>
+					<li><i><b>String</b></i> implementos</li>
+					<li><i><b>int</b></i> categoria</li>
         		</ul>
         		<h5 style="padding-top:5px;">Salida: JSON</h5>
         		<div style="padding-left: 30px; padding-top:5px; padding-bottom:5px;">
@@ -110,12 +111,13 @@
         		<h5>Metodo: POST</h5>
         		<h5>Parametros:</h5>
         		<ul class="input-list">
-        			<li><i><b>int</b></i> id_deporte</li>
+
 					<li><i><b>String</b></i> nombre</li>
 					<li><i><b>String</b></i> modalidad</li>
 					<li><i><b>String</b></i> participantes_min</li>
 					<li><i><b>String</b></i> participantes_max</li>
-					<li><i><b>String</b></i> categoria</li>
+					<li><i><b>String</b></i> implementos</li>
+					<li><i><b>int</b></i> categoria</li>
         		</ul>
         		<h5 style="padding-top:5px;">Salida: JSON</h5>
         		<div style="padding-left: 30px; padding-top:5px; padding-bottom:5px;">
@@ -171,7 +173,5 @@
         	</li>
         </ul>
     </div>
-
-    <script src="WEB/js/script.js"></script>
 </body>
 </html>

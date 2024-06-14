@@ -1,10 +1,11 @@
 
 
 var cargarDeportes = function() {
+    document.getElementById('datos').innerHTML="";
     table_body = document.getElementById('datos');
 
+
     let endpoint = "http://localhost/Deportes_API/API/Obtener_deportes.php";
-    let endpoint2 = "http://localhost/Deportes_API/API/Obtener_categorias.php";
 
     fetch(endpoint)
     .then( res => res.json())
@@ -30,7 +31,7 @@ var cargarDeportes = function() {
             let txt_implementos = document.createTextNode(data[i].implementos);
             let num_categoria = data[i].categoria;
 
-            fetch(endpoint2)
+            fetch("http://localhost/Deportes_API/API/Obtener_categorias.php")
             .then( res => res.json())
             .then( data2 => {
 
@@ -85,8 +86,92 @@ var cargarDeportes = function() {
 
 window.onload = cargarDeportes;
 
+function insertarDeporte(){
+    
+    nombre = document.getElementById("nombre").value;
+    mod = document.getElementById("modalidad").value;
+    players = document.getElementById("participantes").value;
+    items = document.getElementById("implementos").value;
+    type = document.getElementById("categoria").value;
+    console.log("ctaegoria: "+ type);
+
+    let minMax = players.split("-");
+
+    if(nombre == "" || mod == "" || minMax.length != 2 || items == "" || type == "seleccionar"){
+
+        alert("Todos los campos son obligatorios y deben proveer los datos completos");
+  
+    }else{
+
+        let datos = new FormData();
+
+        datos.append("nombre", nombre);
+        datos.append("modalidad", mod);
+        datos.append("participantes_min", minMax[0]);
+        datos.append("participantes_max", minMax[1]);
+        datos.append("implementos", items);
+
+        
+
+        fetch("http://localhost/Deportes_API/API/Obtener_categorias.php")
+        .then( res => res.json())
+        .then( data => {
+            console.log(" entró");
+            for(var a = 0; a < data.length; a++){
+                if(type == data[a].nombre){
+                    let cat = data[a].id_categoria;
+                    datos.append("categoria",cat);
+                    break;
+                }
+            }
+
+            let config = {
+                method: "POST",
+                headers: {
+                    "Accept" : "application/json"
+                },
+                body: datos,
+            };
+    
+            fetch('http://localhost/Deportes_API/API/Insertar_deporte.php', config)
+            .then( res => res.json())
+            .then( data => {
+                console.log(" entró2");
+                table_body.innerHTML = "";
+                limpiarCampos();
+                cargarDeportes();
+    
+            });
+        }); 
+    }
+}
+
+function cargarCategorias(){
+    var select = document.getElementById("categoria");
+    let endpoint = "http://localhost/Deportes_API/API/Obtener_categorias.php";
+
+    let opc = document.createElement('option');
+    opc.value="seleccionar";
+    opc.textContent ="Seleccionar";
+    select.appendChild(opc);
+
+    fetch(endpoint)
+    .then( res => res.json())
+    .then( data => {
+
+        for(var a = 0; a < data.length; a++){
+
+            let opc = document.createElement('option');
+            opc.value=data[a].nombre;
+            opc.textContent =data[a].nombre;
+            select.appendChild(opc);   
+        }
+    });
+}
+
+
 function limpiarCampos(){
-    document.getElementById("cedula").value = "";
+    
     document.getElementById("nombre").value  = "";
     document.getElementById("modalidad").value = "";
     document.getElementById("participantes").value = "";

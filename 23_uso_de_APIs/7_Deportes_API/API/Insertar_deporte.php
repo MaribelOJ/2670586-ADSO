@@ -1,22 +1,23 @@
 <?php 
     include 'DB/Conexion.php';
 
-    if (!empty($_POST['id_deporte']) and !empty($_POST['nombre']) and !empty($_POST['modalidad']) ) {
+    if (!empty($_POST['nombre']) and !empty($_POST['modalidad']) and !empty($_POST['participantes_min']) ) {
 
-        $id_deporte = $_POST['id_deporte'];
-        $nombre = $_POST['nombres'];
+        $nombre = $_POST['nombre'];
         $modalidad = $_POST['modalidad'];
-        $paricipantes_min = $_POST['paricipantes_min'];
+        $participantes_min = $_POST['participantes_min'];
         $participantes_max = $_POST['participantes_max'];
+        $implementos=$_POST['implementos'];
         $categoria = $_POST['categoria'];
 
         try {
-            $consulta = $base_de_datos->prepare("INSERT INTO deportes (id_deporte', nombres, modalidad, paricipantes_min, participantes_max, categoria) VALUES(:id, :nom, :mod, :pmin, :pmax, :cat) ");
-            $consulta->bindParam(':id', $id_deporte);
+
+            $consulta = $base_de_datos->prepare("INSERT INTO deportes (nombre, modalidad, participantes_min, participantes_max, implementos, categoria) VALUES(:nom, :mod, :pmin, :pmax, :imp, :cat)");
             $consulta->bindParam(':nom', $nombre);
-            $consulta->bindParam(':mod', $apellidos);
-            $consulta->bindParam(':pmin', $paricipantes_min);
+            $consulta->bindParam(':mod', $modalidad);
+            $consulta->bindParam(':pmin', $participantes_min);
             $consulta->bindParam(':pmax', $participantes_max);
+            $consulta->bindParam(':imp', $implementos);
             $consulta->bindParam(':cat', $categoria);
             $proceso = $consulta->execute();
 
