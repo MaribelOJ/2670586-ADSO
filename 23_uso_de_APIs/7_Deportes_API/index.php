@@ -91,7 +91,7 @@
         		<h5>Parametros:</h5>
         		<ul class="input-list">
         			<li><i><b>int</b></i>id_categoria</li>
-					<li><i><b>String</b></i> nombre</li>
+					<li><i><b>String</b></i>nombre</li>
         		</ul>
         		<h5 style="padding-top:5px;">Salida: JSON</h5>
         		<div style="padding-left: 30px; padding-top:5px; padding-bottom:5px;">

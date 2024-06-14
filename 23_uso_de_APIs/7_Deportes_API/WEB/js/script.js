@@ -1,4 +1,5 @@
 
+let inputCategoria;
 
 var cargarDeportes = function() {
     document.getElementById('datos').innerHTML="";
@@ -153,6 +154,7 @@ function insertarDeporte(id){
                     body: datos,
                 };  
 
+                console.log(datos);
 
                 fetch('http://localhost/Deportes_API/API/Actualizar_deporte.php', config)
                 .then( res => res.json())
@@ -263,6 +265,230 @@ function cargarCategorias(indice){
         select.value=chosen;
 
     });
+    
+}
+
+function cargarTabla(){
+    document.getElementById("categories").innerHTML="";
+    let container = document.getElementById("categories");
+
+    let endpoint = "http://localhost/Deportes_API/API/Obtener_categorias.php";
+
+    fetch(endpoint)
+    .then( res => res.json())
+    .then( data => {
+
+        let chart = document.createElement('table');
+        chart.classList.add("table", "table-hover");
+        let headSection =document.createElement('thead'); 
+        let bodySection = document.createElement('tbody'); 
+
+        let col1 = document.createElement('td');
+        let col2 = document.createElement('td');
+        let col3 = document.createElement('td');
+        let col4 = document.createElement('td');
+
+
+        let titlesRow = document.createElement('tr');
+
+        let title1=document.createTextNode("Id Categoria");
+        let title2=document.createTextNode("Nombre");
+        col1.classList.add("fw-bold");
+        col2.classList.add("fw-bold");
+        col1.appendChild(title1);
+        col2.appendChild(title2);
+        
+        titlesRow.appendChild(col1);
+        titlesRow.appendChild(col2);
+        titlesRow.appendChild(col3);
+        titlesRow.appendChild(col4);
+
+        headSection.appendChild(titlesRow);
+        chart.appendChild(headSection);
+        
+
+        for(var a = 0; a < data.length; a++){
+
+            let col1 = document.createElement('td');
+            let col2 = document.createElement('td');
+            let col3 = document.createElement('td');
+            let col4 = document.createElement('td');
+
+            let row = document.createElement('tr');
+            
+            let dato1=document.createTextNode(data[a].id_categoria);
+            let dato2=document.createTextNode(data[a].nombre);
+
+            const boton1 = document.createElement('button');
+            const nodoBoton1 = document.createTextNode(' Eliminar ');
+            let parametro1 = "eliminarCategoria('"+data[a].id_categoria+"')";
+            boton1.setAttribute('onclick', parametro1);
+            boton1.classList.add("btn", "btn-danger");
+            boton1.appendChild(nodoBoton1);
+
+            const boton2 = document.createElement('button');
+            const nodoBoton2 = document.createTextNode(' Editar ');
+            let parametro2 = "editarCategoria('"+ data[a].id_categoria +"')";
+            boton2.setAttribute('onclick', parametro2);
+            boton2.classList.add("btn", "btn-success");
+            boton2.appendChild(nodoBoton2);
+
+            col1.appendChild(dato1);
+            col2.appendChild(dato2);
+            col3.appendChild(boton1);
+            col4.appendChild(boton2);
+
+            row.appendChild(col1);
+            row.appendChild(col2);
+            row.appendChild(col3);
+            row.appendChild(col4);
+
+            bodySection.appendChild(row);
+            
+        }
+
+        let footSection = document.createElement('tfoot');
+        let footRow = document.createElement('tr');
+        let uniqueCol = document.createElement('td');
+        uniqueCol.colSpan=4;
+        uniqueCol.classList.add("text-center");
+
+        const boton = document.createElement('button');
+        const nodoBoton = document.createTextNode(' Registrar ');
+        let parametro = "registrarCategoria()";
+        boton.setAttribute('onclick', parametro);
+        boton.classList.add("btn", "btn-info");
+        boton.appendChild(nodoBoton);
+
+        uniqueCol.appendChild(boton);
+        footRow.appendChild(uniqueCol);
+        footSection.appendChild(footRow);
+
+        
+        chart.appendChild(bodySection);
+        chart.appendChild(footSection);
+
+        container.appendChild(chart);
+        
+
+    });
+
+}
+
+function eliminarCategoria(id){
+
+    let datos = new FormData();
+    datos.append("id_categoria", id);
+
+    let config = {
+                    method: "POST",
+                    headers: {
+                        "Accept" : "application/json"
+                    },
+                    body: datos,
+                 };
+    
+    console.log(datos);
+
+    fetch('http://localhost/Deportes_API/API/Eliminar_categoria.php', config)
+    .then( res => res.json())
+    .then( data => {
+
+        console.log("eliminar");
+        table_body.innerHTML = "";
+    });    
+}
+
+function editarCategoria(id){
+
+    let endpoint = "http://localhost/Deportes_API/API/Obtener_categorias.php";
+
+    fetch(endpoint)
+    .then( res => res.json())
+    .then( data => {
+
+
+        document.getElementById("categories").innerHTML="";
+        let container = document.getElementById("categories");
+
+        titulo_modal = document.getElementById('titulo_modal2');
+        encabezado = document.getElementById('encabezado2');
+        titulo_nuevo = document.createElement('h1');
+        titulo_nuevo.id="titulo_modal2";
+        titulo_nuevo.classList.add("modal-title","fs-5");    
+        let txt_titulo = document.createTextNode('Actualizar información: ');
+        titulo_nuevo.appendChild(txt_titulo);
+        encabezado.replaceChild(titulo_nuevo, titulo_modal);
+
+        let form= document.createElement('form');
+        let etq= document.createElement('label');
+        etq.classList.add("me-3");
+        let txt_etq = document.createTextNode("Nombre:");
+
+        etq.appendChild(txt_etq);
+
+        inputCategoria=document.createElement('input');
+        inputCategoria.classList.add("me-3","w-50");
+        inputCategoria.id="nombreCategoria";
+        inputCategoria.type="text";
+
+        for(var a = 0; a < data.length; a++){
+            if(data[a].id_categoria == id){
+                inputCategoria.value=data[a].nombre;
+                break;
+            }
+        }
+
+        const boton = document.createElement('button');
+        boton.classList.add("w-25");
+        const nodoBoton = document.createTextNode('Guardar');
+        let parametro = "insertarCategoria('"+id+"')";
+        boton.setAttribute('onclick', parametro);
+        boton.classList.add("btn", "btn-info");
+        boton.appendChild(nodoBoton);
+        
+        form.appendChild(etq);
+        form.appendChild(inputCategoria);
+        form.appendChild(boton);
+
+        container.appendChild(form);
+    });
+
+}
+
+function insertarCategoria(id){
+
+    let nombre = document.getElementById("nombreCategoria").value;
+    if(nombre == ""){
+        alert("Se debe llenas los campos dispobinles");
+    }else{
+
+        let datos = new FormData();
+        datos.append("id_categoria", id);
+        datos.append("nombre", nombre);
+        
+
+        let config = {
+            method: "POST",
+            headers: {
+                "Accept" : "application/json"
+            },
+            body: datos,
+        };  
+    
+        console.log(config);
+
+        fetch('http://localhost/Deportes_API/API/Actualizar_categoria.php', config)
+        .then( res => res.json())
+        .then( data => {
+    
+            console.log("actualizar categoria");
+            cargarTabla();
+                
+        });
+
+    }
+
     
 }
 
