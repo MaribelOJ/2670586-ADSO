@@ -1,7 +1,7 @@
 <?php 
     include 'DB/Conexion.php';
 
-    if (!empty($_POST['id_categoria']) and !empty($_POST['nombre'])) {
+    if (!empty($_POST['nombre'])) {
 
         $id_deporte = $_POST['id_categoria'];
         $nombre = $_POST['nombres'];

@@ -355,7 +355,7 @@ function cargarTabla(){
 
         const boton = document.createElement('button');
         const nodoBoton = document.createTextNode(' Registrar ');
-        let parametro = "registrarCategoria()";
+        let parametro = "editarCategoria('"+0+"')";
         boton.setAttribute('onclick', parametro);
         boton.classList.add("btn", "btn-info");
         boton.appendChild(nodoBoton);
@@ -462,34 +462,56 @@ function insertarCategoria(id){
     if(nombre == ""){
         alert("Se debe llenas los campos dispobinles");
     }else{
-
         let datos = new FormData();
-        datos.append("id_categoria", id);
         datos.append("nombre", nombre);
+
+        if(id==0){
+            let config = {
+                method: "POST",
+                headers: {
+                    "Accept" : "application/json"
+                },
+                body: datos,
+            };  
         
+            console.log(datos);
 
-        let config = {
-            method: "POST",
-            headers: {
-                "Accept" : "application/json"
-            },
-            body: datos,
-        };  
-    
-        console.log(config);
+            fetch('http://localhost/Deportes_API/API/Insertar_categoria.php', config)
+            .then( res => res.json())
+            .then( data => {
+        
+                console.log("actualizar categoria");
+                cargarTabla();
+                    
+            });
 
-        fetch('http://localhost/Deportes_API/API/Actualizar_categoria.php', config)
-        .then( res => res.json())
-        .then( data => {
-    
-            console.log("actualizar categoria");
-            cargarTabla();
-                
-        });
+
+        }else{
+
+            datos.append("id_categoria", id);
+
+            let config = {
+                method: "POST",
+                headers: {
+                    "Accept" : "application/json"
+                },
+                body: datos,
+            };  
+        
+            console.log(config);
+
+            fetch('http://localhost/Deportes_API/API/Actualizar_categoria.php', config)
+            .then( res => res.json())
+            .then( data => {
+        
+                console.log("actualizar categoria");
+                cargarTabla();
+                    
+            });
+        } 
 
     }
 
-    
 }
 
 function limpiarCampos(){
